@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0877ab">
+    <title>Matematikk R2</title> 
+
+    <style>
+        h1 {
+            font-size: 50px; 
+            font-weight: bold; 
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        header {
+            background: #0877ab;
+            color: white;
+            padding: 3px 0;
+            text-align: center;
+        }
+
+        .hero {
+            background-image: url('MatematikkBakgrunn.png');
+            background-size: cover;
+            background-position: center;
+            padding: 60px 20px;
+            min-height: 500px;
+        }
+
+        main {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 0 15px rgba(0,0,0,0.35);
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+            margin: 20px;
+        }
+
+        a {
+            color: #8B0000;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="hero">
+    <main>
+        <h1>Matematikk R2</h1>
+
+        <p><strong>Her 👇 er flervalgsoppgaver til alle emner i Matematikk R2.</strong></p>
+
+        <ul>
+            <li><a href="./Kap1/Oppgave1.html" onclick="velgKategori('Kap1')">Følger og rekker</a></li>
+            <li><a href="./Kap2/Oppgave1.html" onclick="velgKategori('Kap2')">Integrasjon</a></li>
+            <li><a href="./Kap3/Oppgave1.html" onclick="velgKategori('Kap3')">Trigonometri</a></li>
+            <li><a href="./Kap4/Oppgave1.html" onclick="velgKategori('Kap4')">Romgeometri</a></li>
+        </ul>
+
+        <p><strong>
+        Trykk deg inn på emnet du vil jobbe med. Riktig svar blir grønt 💚, feil blir rødt 🤬.
+        </strong></p>
+
+        <p><strong>
+        Spørsmål du svarer feil på kommer igjen senere.
+        </strong></p>
+    </main>
+</div>
+
+<script>
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function velgKategori(kategori) {
+
+    const TOTAL = {
+        Kap1: 19, Kap2: 15, Kap3: 8, Kap4: 2
+    };
+
+    const alle = [];
+    for (let i = 1; i <= (TOTAL[kategori] || 1); i++) {
+        alle.push(i);
+    }
+
+    shuffle(alle);
+
+    const antall = Math.min(10, alle.length);
+    const tilfeldig = alle.slice(0, antall);
+
+    sessionStorage.setItem("valgtKategori", kategori);
+    sessionStorage.setItem("aktivtOppgavesett", JSON.stringify(tilfeldig));
+    sessionStorage.removeItem("harStartet");
+}
+</script>
+
+</body>
+</html>
