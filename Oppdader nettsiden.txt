@@ -1,5 +1,7 @@
 Åpne Nettside i Terminal og legg inn følgende:
 
+cd C:\Users\ohm\Dropbox\Matematikk\MatematikkR2
+git remote -v "Sjekker at repo er riktig! Sjekk at det stemmer!!!!!!!!!"
 git add .
 git commit -m "Bla, bla, ... hva som er endret..."
 git push
