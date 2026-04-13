@@ -49,7 +49,7 @@ function oppdaterStatus() {
     const prosent = besvart ? Math.round((antallRiktig / besvart) * 100) : 0;
     document.getElementById("prosent").textContent = prosent;
 
-    const progress = Math.round((antallRiktig / aktivtSett.length) * 100);
+    const progress = Math.floor((antallRiktig / aktivtSett.length) * 100);
     document.getElementById("progress").style.width = progress + "%";
 }
 
