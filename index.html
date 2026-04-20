@@ -96,6 +96,7 @@
 </div>
 
 <script>
+    
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -106,7 +107,7 @@ function shuffle(array) {
 function velgKategori(kategori) {
 
     const TOTAL = {
-        Kap1: 22, Kap2: 30, Kap3: 30, Kap4: 18
+        Kap1: 22, Kap2: 41, Kap3: 43, Kap4: 33
     };
 
     const alle = [];
@@ -123,7 +124,7 @@ function velgKategori(kategori) {
     sessionStorage.setItem("aktivtOppgavesett", JSON.stringify(tilfeldig));
     sessionStorage.removeItem("harStartet");
 }
-</script>
 
+</script>
 </body>
 </html>

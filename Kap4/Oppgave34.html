@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0877ab">
+
+<title>Flervalgsoppgaver R2</title>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<link rel="stylesheet" href="../FlervalgsStyle.css">
+<script src="../FlervalgScript.js" defer></script>
+
+</head>
+
+<body>
+
+<a href="../index.html">← Tilbake til hovedsiden</a>
+
+<div class="status">
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+    <div class="teller">
+        Riktig: <span id="riktig">0</span> |
+        Feil: <span id="feil">0</span> |
+        Score: <span id="prosent">0</span>%
+    </div>
+</div>
+
+<div class="container">
+    <div class="box">
+        <p>En partikkel beveger seg i en sirkelbane.</p>
+
+        <p>Radien i banen er 3 meter og rundetiden er 2 sekunder</p>
+
+        <p>La tiden \(t\) måles i sekunder og la enhetene på aksene være meter.</p>
+
+        <p><strong>Hvilken vektorfunksjon kan beskrive bevegelsen til partikkelen?</strong></p>
+
+        <form id="quiz">
+            <label class="svar" tabindex="0">
+                <input type="radio" name="svar" value="riktig">
+                <span>\( \vec{r}(t) = \left[ 3 \cos \pi t \;\;,\;\; 3 \sin \pi t \right] \)</span>
+            </label>
+
+            <label class="svar" tabindex="0">
+                <input type="radio" name="svar" value="feil">
+                <span>\( \vec{r}(t) = \left[ 3 \cos 4\pi t \;\;,\;\; 3 \sin 4\pi t \right] \)</span>
+            </label>
+
+            <label class="svar" tabindex="0">
+                <input type="radio" name="svar" value="feil">
+                <span>\( \vec{r}(t) = \left[ 3 \cos 2 t \;\;,\;\; 3 \sin 2 t \right] \)</span>
+            </label>
+
+        </form>
+
+        <button id="neste" onclick="nesteSporsmal()">Neste spørsmål</button>
+    </div>
+
+</div>
+
+</body>
+</html>
