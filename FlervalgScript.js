@@ -63,6 +63,24 @@ if (!Array.isArray(aktivtSett) || aktivtSett.length === 0) {
     aktivtSett = [OPPGAVE_ID];
 }
 
+// ✅ Hvis vi starter på Oppgave1, hopp videre til en tilfeldig første oppgave
+if (
+    OPPGAVE_ID === 1 &&
+    !sessionStorage.getItem("harStartet") &&
+    Array.isArray(aktivtSett) &&
+    aktivtSett.length > 0
+) {
+    const tilfeldigStart =
+        aktivtSett[Math.floor(Math.random() * aktivtSett.length)];
+
+    sessionStorage.setItem("harStartet", "true");
+
+    if (tilfeldigStart !== 1) {
+        window.location.replace(`Oppgave${tilfeldigStart}.html`);
+    }
+}
+
+
 // Reset lagret data ved nytt sett
 if (OPPGAVE_ID === 1 && !sessionStorage.getItem("harStartet")) {
     localStorage.removeItem(STORAGE_KEY);
