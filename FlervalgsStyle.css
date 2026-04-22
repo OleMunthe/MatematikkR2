@@ -119,39 +119,34 @@ img {
     max-width: 550px;
 }
 
-.antall-velger {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 20px;
+
+/* 2x2 grid for bildesvar */
+.bilde-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 kolonner */
+    gap: 15px;
 }
 
-.antall-velger button {
-    flex: 1;
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 10px;
-    border: 2px solid #0877ab;
-    background: white;
-    font-weight: bold;
+/* Tilpass hvert svar */
+.bilde-svar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+}
+
+/* Bildene */
+.bilde-svar img {
+    max-width: 100%;
+    height: auto;
     cursor: pointer;
 }
 
-.antall-velger button.aktiv {
-    background: #0877ab;
-    color: white;
-}
 
-/* 📱 Mobil – app‑layout */
-@media (max-width: 768px) {
-  .antall-velger {
-    flex-direction: column;
-  }
 
-  .antall-velger button {
-    font-size: 18px;
-    padding: 16px;
-  }
-}
+
+
+/* MOBIL */
 
 @media (max-width: 768px) {
 
