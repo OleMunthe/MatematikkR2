@@ -1,0 +1,6 @@
+Åpne OppgaveX.html i Edge
+Ctrl + Shift + I og kjør dette i konsollen:
+
+
+localStorage.clear();
+sessionStorage.clear();

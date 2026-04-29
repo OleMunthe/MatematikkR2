@@ -78,7 +78,24 @@
 
         <p><strong>Nedenfor 👇 er flervalgsoppgaver til alle emner i Matematikk R2. </strong></p>
 
-        <p><strong>Hver gang du går inn på en av lenkene får du 10 tilfeldige spørsmål fra det valgte emnet - det kommer altså ulike oppgaver hver gang du går inn.</strong></p>
+        <p><strong>Hver gang du går inn på en av lenkene får trukket ut ulike tilfeldige oppgaver fra det aktuelle emnet.</strong></p>
+
+        <div class="antall-velger">
+  <strong>Før du starter; Velg hvor mange oppgaver du vil ha:</strong>
+  <label>
+    <input type="radio" name="antallOppgaver" value="10">
+    10
+  </label>
+  <label>
+    <input type="radio" name="antallOppgaver" value="20">
+    20
+  </label>
+  <label>
+    <input type="radio" name="antallOppgaver" value="30">
+    30
+  </label>
+</div>
+
 
         <ul class="app-link-list">
             <li><a class="app-link" href="./Kap1/Oppgave1.html" onclick="velgKategori('Kap1')">Følger og rekker</a></li>
@@ -110,7 +127,7 @@ function shuffle(array) {
 function velgKategori(kategori) {
 
     const TOTAL = {
-        Kap1: 28, Kap2: 58, Kap3: 58, Kap4: 52
+        Kap1: 39, Kap2: 67, Kap3: 74, Kap4: 74
     };
 
     // ✅ Nullstill ALT for ny kategori
@@ -138,6 +155,22 @@ function velgKategori(kategori) {
 }
 
 
+
+  // Sett default hvis ikke valgt tidligere
+  if (!sessionStorage.getItem("antallOppgaver")) {
+    sessionStorage.setItem("antallOppgaver", "10");
+  }
+
+  // Sett riktig radio som valgt ved lasting
+  document.querySelectorAll("input[name='antallOppgaver']").forEach(radio => {
+    if (radio.value === sessionStorage.getItem("antallOppgaver")) {
+      radio.checked = true;
+    }
+
+    radio.addEventListener("change", () => {
+      sessionStorage.setItem("antallOppgaver", radio.value);
+    });
+  });
 
 
 </script>

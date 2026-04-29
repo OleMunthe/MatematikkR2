@@ -234,3 +234,12 @@ const sluttData = hentData();
 if (sluttData.riktige.length === aktivtSett.length) {
     visFerdig();
 }
+
+
+
+
+
+
+
+
+
