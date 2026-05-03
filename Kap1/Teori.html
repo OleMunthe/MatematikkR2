@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Følger og rekker</title>
+
+  <!-- MathJax -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      max-width: 900px;
+      margin: auto;
+      line-height: 1.6;
+      background-color: #fafafa;
+    }
+
+    h1, h2, h3 {
+      margin-top: 2em;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      margin: 1em auto;
+    }
+
+    /* ---------- BOKSER ---------- */
+
+    /* Definisjon */
+    .definition {
+      background-color: #ecfeff;
+      border-left: 6px solid #0891b2;
+      padding: 1.2em 1.5em;
+      margin: 2em 0;
+      border-radius: 8px;
+    }
+
+    .definition h3::before {
+      content: "📘 ";
+    }
+
+    /* Eksempel */
+    .example {
+      background-color: #ecfdf5;
+      border: 2px solid #10b981;
+      border-left-width: 6px;
+      padding: 1.2em 1.5em;
+      margin: 2em 0;
+      border-radius: 10px;
+    }
+
+    .example h3 {
+      margin-top: 0;
+      color: #065f46;
+    }
+
+    .example h3::before {
+      content: "📌 ";
+    }
+
+    .solution {
+      background-color: #ffffff;
+      border: 1px dashed #34d399;
+      padding: 1em;
+      margin-top: 1em;
+      border-radius: 6px;
+    }
+
+    /* Merk */
+    .note {
+      background-color: #fff7ed;
+      border-left: 6px solid #f59e0b;
+      padding: 1.2em 1.5em;
+      margin: 2em 0;
+      border-radius: 8px;
+    }
+
+    .note strong::before {
+      content: "⚠️ ";
+    }
+
+    /* Programkode */
+    .codebox {
+      background-color: #0f172a;
+      color: #e5e7eb;
+      padding: 1.5em;
+      border-radius: 10px;
+      margin: 2em 0;
+      overflow-x: auto;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .codebox::before {
+      content: "💻 Programkode";
+      display: block;
+      color: #34d399;
+      margin-bottom: 0.8em;
+      font-weight: bold;
+    }
+
+    /* ===========================
+   Mobiltilpasning
+   =========================== */
+
+@media (max-width: 700px) {
+
+  body {
+    padding: 1em;
+    font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  /* Bokser: mindre padding på mobil */
+  .example,
+  .definition,
+  .note,
+  .codebox {
+    padding: 1em;
+    margin: 1.5em 0;
+  }
+
+  /* Bilder: litt større på mobil */
+  img {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  /* Programkode: lettere å lese */
+  .codebox {
+    font-size: 0.9rem;
+  }
+
+}
+
+/* ===== Skriv til PDF-knapp ===== */
+
+.print-button {
+  display: block;
+  margin: 1.5em auto;
+  padding: 0.6em 1.4em;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.print-button:hover {
+  background-color: #059669;
+}
+
+/* Skjul knappen på mobil */
+@media (max-width: 700px) {
+  .print-button {
+    display: none;
+  }
+}
+
+@media print {
+  .print-button {
+    display: none;
+  }
+}
+
+
+/* ===========================
+   PDF / Utskrift
+   =========================== */
+
+@media print {
+
+  /* Generelle marger for A4 */
+  body {
+    margin: 1.5cm;
+    background: white;
+  }
+
+  /* Overskrifter starter på ny side */
+  h1,
+  h2 {
+    page-break-before: always;
+  }
+
+  /* Aldri del disse boksene over sider */
+  .definition,
+  .example,
+  .note,
+  .codebox {
+    page-break-inside: avoid;
+  }
+
+  /* Tillat at løsninger deles om nødvendig */
+  .solution {
+    page-break-inside: auto;
+  }
+
+  /* Bilder bør heller flyttes enn å deles */
+  img {
+    page-break-inside: avoid;
+  }
+
+  /* PDF skal ikke vise knappen */
+  .print-button {
+    display: none !important;
+  }
+}
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+  </style>
+</head>
+
+<body>
+<a href="../index.html" class="no-print">← Tilbake til hovedsiden</a>
+<button class="print-button" onclick="window.print()">
+  🖨️ Skriv til PDF
+</button>
+
+<h1>Følger og rekker</h1>
+
+<p><strong>Sammendrag:</strong></p>
+
+<ul>
+  <li>
+    Aritmetisk rekke:
+    \[
+      a_n = a_{n-1} + d
+    \]
+    \[
+      \sum_{i=1}^{n} a_i = a_1 + a_2 + \cdots + a_n
+      = \frac{n(a_1+a_n)}{2}
+    \]
+  </li>
+
+  <li>
+    Geometrisk rekke:
+    \[
+      a_n = a_{n-1}\cdot k
+    \]
+    \[
+      \sum_{i=1}^{n} a_i = a_1 + a_2 + \cdots + a_n
+      = a_1\cdot \frac{k^n-1}{k-1}
+    \]
+  </li>
+
+  <li>
+    Uendelig geometrisk rekke: Konvergerer når \(-1 < k < 1\)
+    \[
+      \sum_{i=1}^{\infty} a_i = a_1 + a_2 + \cdots
+      = \frac{a_1}{1-k}
+    \]
+  </li>
+
+  <li>
+    Kontrapositivt bevis: \(A \Rightarrow B\) betyr at
+    <strong>ikke</strong> \(B \Rightarrow\) <strong>ikke</strong> \(A\).
+  </li>
+
+  <li>
+    Induksjonsbevis summen av en rekke:
+    <ol>
+      <li>Vis at \(S_1\) stemmer</li>
+      <li>Vis at \(S_n = S_{n-1} + a_n\)</li>
+    </ol>
+  </li>
+
+  <li>
+    Induksjonsbevis for formel til \(a_n\)
+        <ol>
+      <li>Vis at \(a_1\) stemmer</li>
+      <li>Vise at dersom \(a_{n-1}\) er riktig, vil det føre til at \(a_n\) er riktig</li>
+    </ol>
+  </li>
+</ul>
+
+<section>
+<h2>Følger og rekker</h2>
+
+<p>
+  <strong>Følge (tallfølge):</strong> En ordnet liste med tall, f.eks.
+</p>
+
+\[
+  1, 3, 6, 10, 15, \ldots
+\]
+
+<p>
+  <strong>Element:</strong> Verdiene i en følge.
+</p>
+
+<p>
+  I følgen over er første element \(a_1 = 1\), andre element \(a_2 = 3\), osv.
+</p>
+
+<p>
+  <strong>Rekursiv formel:</strong> Formel hvor vi bruker det foregående leddet.
+</p>
+
+<p>
+  I følgen over er hvert ledd det foregående pluss leddnr.,
+</p>
+
+\[
+  a_n = a_{n-1} + n
+\]
+
+<p>
+  Vi sjekker at formelen er riktig for ledd nr. 2 og 3:
+</p>
+
+\[
+\begin{aligned}
+a_2 &= a_{2-1} + 2 = a_1 + 2 = 1 + 2 = 3 \\
+a_3 &= a_{3-1} + 3 = a_2 + 3 = 3 + 3 = 6
+\end{aligned}
+\]
+
+<p>
+  <strong>Eksplisitt formel:</strong> Formel hvor vi ikke bruker det foregående leddet.
+</p>
+
+<p>
+  I følgen over er hvert ledd gitt ved
+</p>
+
+\[
+  a_n = \frac{n\cdot(n+1)}{2}
+\]
+
+<p>
+  Vi kan se at formelen er riktig for de tre første leddene:
+</p>
+
+\[
+\begin{aligned}
+a_1 &= \frac{1\cdot(1+1)}{2} = \frac{2}{2} = 1 \\
+a_2 &= \frac{2\cdot(2+1)}{2} = \frac{6}{2} = 3 \\
+a_3 &= \frac{3\cdot(3+1)}{2} = \frac{12}{2} = 6
+\end{aligned}
+\]
+
+<p>
+  <strong>Rekke:</strong> Summen av en følge. Vi bruker
+  <strong>summasjonstegnet</strong>:
+</p>
+
+\[
+  S_n = \sum_{i=1}^{n} a_i = a_1 + a_2 + a_3 + \cdots + a_n
+\]
+
+<p>
+  <strong>Python-program for å bestemme summen av en følge:</strong>
+</p>
+
+<div class="codebox">
+<pre>
+a = 1 # Første ledd
+S = a # Startverdi for summen
+N = 10 # Antall ledd
+
+for n in range(2, N+1):
+    a = a + n # Den rekursive sammenhengen
+    S = S + a # Summen øker
+print(S)
+</pre>
+</div>
+
+</section>
+
+<section>
+<h2>Bevis</h2>
+
+<div class="definition">
+  <h3>Partall og oddetall</h3>
+
+  <p>
+    Partall kan skrives som \(2k\), hvor \(k\) er et heltall.
+  </p>
+
+  <p>
+    Oddetall kan skrives som \(2k + 1\), hvor \(k\) er et heltall.
+  </p>
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    <strong>Påstand:</strong> Hvis \(n\) er et partall, så er \(n^2\) et partall.
+  </p>
+
+  <div class="solution">
+    <strong>BEVIS:</strong>
+
+    \[
+      n^2 = (2k)^2 = 2^2\cdot k^2
+      = 2\cdot(2k^2)
+      = 2\cdot \text{heltall}
+    \]
+
+    <p style="text-align: right;">Q.E.D.</p>
+  </div>
+</div>
+
+<p>
+  Beviset ovenfor er et <strong>direkte bevis</strong>.
+</p>
+
+<p>
+  I et <strong>kontrapositivt bevis</strong> bruker vi at
+</p>
+
+\[
+  A \Rightarrow B
+  \quad \text{er ekvivalent med} \quad
+  \text{ikke }B \Rightarrow \text{ikke }A
+\]
+
+<p>
+  "Du bader" \(\Rightarrow\) "Du er våt" betyr at
+  "Du er ikke våt" \(\Rightarrow\) "Du bader ikke".
+</p>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    <strong>Påstand:</strong> Hvis \(n^2\) er et partall, så er \(n\) et partall.
+  </p>
+
+  <div class="solution">
+    <strong>BEVIS:</strong>
+
+    <p>
+      Hvis \(n\) <em>ikke</em> er et partall:
+    </p>
+
+    \[
+      n^2 = (2k+1)^2
+      = 4k^2 + 4k + 1
+      = 2\cdot(2k^2+2k)+1
+      = \text{oddetall}
+    \]
+
+    <p>
+      Altså: \(n\) er ikke partall \(\Rightarrow\) \(n^2\) er ikke partall.
+    </p>
+
+    <p>
+      Dette betyr at: \(n^2\) er partall \(\Rightarrow\) \(n\) er partall.
+    </p>
+
+    <p style="text-align: right;">Q.E.D.</p>
+  </div>
+</div>
+
+<div class="note">
+  <strong>Merk:</strong><br>
+  Det er vanlig å skrive Q.E.D. på slutten av bevis.
+  Dette er en forkortelse for det latinske uttrykket
+  "quod erat demonstrandum", som betyr
+  "hvilket var det som skulle bevises".
+</div>
+
+<p>
+  Vi vil ofte bevise formelen for rekker. For å være ganske sikker på at en
+  formel er riktig, kan vi sjekke den for mange ledd, men vi kan ikke være
+  <em>helt sikre</em> på at formelen er gyldig for uendelig mange ledd.
+</p>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Summen av de \(n\) første partallene er gitt ved
+  </p>
+
+  \[
+    2 + 4 + 6 + \cdots + 2n = n^2 + n
+  \]
+
+  <p>
+    Vi kan undersøke om formelen ser ut til å være riktig:
+  </p>
+
+  \[
+  \begin{aligned}
+  &\text{Når } n = 1:\quad 2 = 1^2 + 1 = 1 \\
+  &\text{Når } n = 2:\quad 2 + 4 = 2^2 + 2 = 6 \\
+  &\text{Når } n = 3:\quad 2 + 4 + 6 = 3^2 + 3 = 12 \\
+  &\text{Når } n = 4:\quad 2 + 4 + 6 + 8 = 4^2 + 4 = 20
+  \end{aligned}
+  \]
+
+  <p>
+    Formelen ser ut til å være riktig, men vi kan ikke være
+    <em>helt sikre</em>!
+  </p>
+</div>
+
+<div class="definition">
+  <h3>Induksjonsbevis for summen av rekker</h3>
+
+  <ol>
+    <li>Vise at \(S_1\) er riktig</li>
+    <li>Vise at \(S_n = S_{n-1} + a_n\)</li>
+  </ol>
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Vi beviser formelen i forrige eksempel:
+  </p>
+
+  <div class="solution">
+    <ol>
+      <li>
+        Formelen er riktig for det første leddet:
+        \[
+          S_1 = 1^2 + 1 = 1 + 1 = 2
+        \]
+      </li>
+
+      <li>
+        Dersom \(S_{n-1}\) er riktig, får vi
+        \[
+        \begin{aligned}
+        S_n &= S_{n-1} + a_n \\
+            &= (n-1)^2 + (n-1) + 2n \\
+            &= n^2 - 2n + 1 + n - 1 + 2n \\
+            &= n^2 + n
+        \end{aligned}
+        \]
+      </li>
+    </ol>
+
+    <p>
+      Steg 1 viser at \(S_1\) er riktig.
+    </p>
+
+    <p>
+      Steg 2 viser at formelen er riktig for \(S_n\) når den er riktig for
+      \(S_{n-1}\).
+    </p>
+
+    <p>
+      Dermed er formelen riktig for alle verdier av \(n\).
+    </p>
+
+    <p style="text-align: right;">Q.E.D.</p>
+  </div>
+</div>
+
+<div class="definition">
+  <h3>Induksjonsbevis for ledd i følger</h3>
+
+  <ol>
+    <li>Vise at \(a_1\) er riktig</li>
+    <li>
+      Vise at dersom \(a_{n-1}\) er riktig, vil det føre til at \(a_n\) er riktig
+    </li>
+  </ol>
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    <strong>Påstand:</strong> For den rekursive følgen med \(a_1 = 1\) og
+    \(a_n = a_{n-1} + n\), så er ledd nummer \(n\) gitt ved
+  </p>
+
+  \[
+    a_n = \frac{n(n+1)}{2}
+  \]
+
+  <div class="solution">
+    <strong>BEVIS:</strong>
+
+    <ol>
+      <li>
+        Formelen er riktig for \(a_1\):
+
+        \[
+          a_1 = \frac{1\cdot(1+1)}{2}
+          = \frac{1\cdot 2}{2}
+          = 1
+        \]
+      </li>
+
+      <li>
+        Dersom \(a_{n-1}\) er riktig, får vi
+
+        \[
+        \begin{aligned}
+        a_n &= a_{n-1} + n \\
+            &= \frac{(n-1)((n-1)+1)}{2} + n \\
+            &= \frac{(n-1)n + 2n}{2} \\
+            &= \frac{n(n+1)}{2}
+        \end{aligned}
+        \]
+      </li>
+    </ol>
+
+    <p>
+      Steg 1 viser at \(a_1\) er riktig.
+    </p>
+
+    <p>
+      Steg 2 viser at formelen for \(a_n\) er riktig hvis \(a_{n-1}\) er riktig.
+    </p>
+
+    <p>
+      Dermed er formelen riktig for alle verdier av \(n\).
+    </p>
+
+    <p style="text-align: right;">Q.E.D.</p>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>Aritmetiske og geometriske rekker</h2>
+
+<div class="definition">
+  <h3>Aritmetisk følge og rekke</h3>
+
+  <p>
+    I en aritmetisk følge er det en fast differanse \(d\) mellom hvert element.
+  </p>
+  \[
+    a_n = a_{n-1} + d
+  \]
+
+  <p>
+    Summen av de \(n\) første leddene i en aritmetisk rekke er gitt ved
+  </p>
+  \[
+    S_n = \frac{n\cdot(a_1+a_n)}{2}
+  \]
+</div>
+
+
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Bestem summen
+  </p>
+
+  \[
+    2 + 5 + 8 + 11 + 14 + 17
+  \]
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>
+      Vi kan bestemme summen direkte,
+    </p>
+
+    \[
+      2 + 5 + 8 + 11 + 14 + 17 = 57
+    \]
+
+    <p>
+      eller ved hjelp av formelen
+    </p>
+
+    \[
+      S_6 = \frac{6\cdot(2+17)}{2}
+      = \frac{6\cdot 19}{2}
+      = 3\cdot 19
+      = 57
+    \]
+  </div>
+</div>
+
+<p>
+  Vi kan ganske enkelt forstå summe-formelen for en aritmetisk rekke ved hjelp av
+  illustrasjonen nedenfor:
+</p>
+
+<img src="arisum.png" alt="Illustrasjon av summen av en aritmetisk rekke" style="width: 30%;">
+
+<div class="definition">
+  <h3>Geometrisk følge og rekke</h3>
+
+  <p>
+    I en geometrisk følge er det et fast forhold (kvotient) \(k\) mellom et
+    element og det foregående elementet.
+  </p>
+  \[
+    a_n = a_{n-1}\cdot k
+  \]
+  <p>
+    Summen av de \(n\) første leddene i en geometrisk rekke er gitt ved
+  </p>
+  \[
+    S_n = a_1\cdot \frac{k^n-1}{k-1}
+  \]
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Bestem summen
+  </p>
+
+  \[
+    2 + 6 + 18 + 54
+  \]
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>
+      Vi kan bestemme summen direkte,
+    </p>
+
+    \[
+      2 + 6 + 18 + 54 = 80
+    \]
+
+    <p>
+      eller ved hjelp av formelen
+    </p>
+
+    \[
+      S_4 = 2\cdot \frac{3^4-1}{3-1}
+      = 2\cdot \frac{80}{2}
+      = 80
+    \]
+  </div>
+</div>
+</section>
+
+<section>
+<h2>Uendelige rekker</h2>
+
+<div class="definition">
+  <h3>Konvergent rekke</h3>
+
+  <p>
+    Vi sier at en rekke er <strong>konvergent</strong> dersom summen av uendelig mange ledd
+    i rekka går (<em>konvergerer</em>) mot et bestemt tall.
+    Hvis ikke rekka konvergerer, sier vi at den <strong>divergerer</strong>.
+  </p>
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Hva er den uendelige summen
+    \(1 + \frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \cdots\)?
+  </p>
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>
+      Vi kan tenke oss at vi først går 1 meter mot høyre, deretter 1/2 meter,
+      deretter 1/4 meter, osv. Vi går da hele tiden halvveis fram til
+      2 meter totalt, men kommer aldri helt fram.
+    </p>
+
+    <img src="linje.png" alt="Illustrasjon av en uendelig geometrisk rekke" style="width: 45%;">
+
+    <p>
+      Rekka konvergerer mot 2.
+    </p>
+  </div>
+</div>
+
+<div class="definition">
+  <h3>Uendelig konvergent geometrisk rekke</h3>
+
+  <p>
+    En geometrisk rekke er konvergent dersom
+  </p>
+
+  \[
+    -1 < k < 1
+  \]
+
+  <p>
+    og summen er da
+  </p>
+
+  \[
+    S = a_1\cdot \frac{k^{\infty}-1}{k-1}
+    = \frac{a_1}{1-k}
+  \]
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Vi finner summen
+    \(1 + \frac{1}{2} + \frac{1}{4} + \cdots\)
+    med formelen:
+  </p>
+
+  <div class="solution">
+    \[
+      S = \frac{a_1}{1-k}
+      = \frac{1}{1-\frac{1}{2}}
+      = \frac{1}{\frac{1}{2}}
+      = 2
+    \]
+  </div>
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  \[
+    3 + 12x + 48x^2 + \cdots
+  \]
+
+  <p>
+    <strong>Konvergensområdet</strong> til rekka er
+  </p>
+
+  \[
+    -1 < k < 1
+  \]
+
+  \[
+    -1 < 4x < 1
+  \]
+
+  \[
+    -\frac{1}{4} < x < \frac{1}{4}
+  \]
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Løs likningen
+    \(3 + 12x + 48x^2 + \cdots = 1\).
+  </p>
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    \[
+    \begin{aligned}
+    \frac{a_1}{1-k}
+    = \frac{3}{1-4x} &= 1 \\
+    3 &= 1 - 4x \\
+    x &= -\frac{1}{2}
+    \end{aligned}
+    \]
+
+    <p>
+      Men konvergensområdet er
+      \(-\frac{1}{4} < x < \frac{1}{4}\),
+      så likningen har
+      <u><strong>ingen løsning</strong></u>.
+      <br>Summen blir altså ikke 1 for noen verdi av \(x\).
+    </p>
+  </div>
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  \[
+    3 + 12x + 48x^2 + \cdots
+  \]
+
+  <p>
+    For hvilke verdier av \(b\) har likningen \(S(x) = b\) løsninger?
+  </p>
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>
+      Spørsmålet er egentlig:
+      <strong>Hvilke verdier kan summen \(S(x)\) ha?</strong>
+    </p>
+
+    <p>
+      Vi kan skrive rekka som
+    </p>
+
+    \[
+      3\cdot\left(1 + 4x + (4x)^2 + \cdots\right)
+      =
+      3\cdot\left(1+k+k^2+\cdots\right)
+    \]
+
+    <p>
+      Summen er da
+    </p>
+
+    \[
+      S = \frac{3}{1-k}
+      \quad \text{hvor} \quad -1 < k < 1
+    \]
+
+    <p>
+      Grensene \(k \rightarrow \pm 1\) gir at \(b \in \left\langle \frac{3}{2}, \rightarrow \right\rangle\).
+    </p>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>Praktiske anvendelser av rekker</h2>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Ole setter hver måned inn 1000 kr på en sparekonto med en månedlig
+    rentefot på 0,5 %.
+  </p>
+
+  <p>
+    Hvor mye står på kontoen etter 10 måneder?
+  </p>
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>
+      Beløpet fra første måned har vokst til
+      \(1000\cdot 1{,}005^{10}\).
+    </p>
+
+    <p>
+      Beløpet fra andre måned har vokst til
+      \(1000\cdot 1{,}005^9\).
+    </p>
+
+    <p>
+      Beløpet fra tredje måned har vokst til
+      \(1000\cdot 1{,}005^8\).
+    </p>
+
+    \[
+      \vdots
+    \]
+
+    <p>
+      Det totale beløpet er
+    </p>
+
+    \[
+      1000\cdot 1{,}005^{10}
+      + 1000\cdot 1{,}005^9
+      + \cdots
+      + 1000\cdot 1{,}005
+      + 1000
+    \]
+
+    <p>
+      Dette er en geometrisk rekke med summen
+    </p>
+
+    \[
+      S = a_1\cdot \frac{k^{11}-1}{k-1}
+      =
+      1000\cdot \frac{1{,}005^{11}-1}{1{,}005-1}
+      =
+      11\,279 \text{ kr}
+    \]
+  </div>
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    En pasient får 10 mg av en type medisin hver time.
+    Hver time forsvinner 50 % av medisinen ut av kroppen på pasienten.
+  </p>
+
+  <p>
+    Hvor mye medisin er i kroppen etter lang tid?
+  </p>
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>
+      Etter lang tid har pasienten 10 mg han akkurat har tatt,
+      \(10\cdot 0{,}50\) mg han tok for én time siden, osv.
+      Totalt blir dette
+    </p>
+
+    \[
+    10 + 10\cdot 0{,}50 + 10\cdot 0{,}50^2+ \cdots  = \frac{a_1}{1-k}   = \frac{10}{1-0{,}50}  = 20 \text{ mg}
+
+    \]
+  </div>
+</div>
+
+<div class="note">
+  <strong>NB:</strong><br>
+  Det går ofte raskest å bruke formler når vi jobber med praktiske oppgaver,
+  slik som i eksemplene ovenfor. Men noen ganger kan det være hensiktsmessig
+  å bruke Excel eller programmering, så ha Excel og Python i bakhodet når du
+  løser oppgaver.
+</div>
+</section>
+
+</body>
+</html>

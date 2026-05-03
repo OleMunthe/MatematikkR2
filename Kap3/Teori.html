@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Trigonometri</title>
+
+  <!-- MathJax -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      max-width: 900px;
+      margin: auto;
+      line-height: 1.6;
+      background-color: #fafafa;
+    }
+
+    h1, h2, h3 {
+      margin-top: 2em;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      margin: 1em auto;
+    }
+
+    /* ---------- BOKSER ---------- */
+
+    /* Definisjon */
+    .definition {
+      background-color: #ecfeff;
+      border-left: 6px solid #0891b2;
+      padding: 1.2em 1.5em;
+      margin: 2em 0;
+      border-radius: 8px;
+    }
+
+    .definition h3::before {
+      content: "📘 ";
+    }
+
+    /* Eksempel */
+    .example {
+      background-color: #ecfdf5;
+      border: 2px solid #10b981;
+      border-left-width: 6px;
+      padding: 1.2em 1.5em;
+      margin: 2em 0;
+      border-radius: 10px;
+    }
+
+    .example h3 {
+      margin-top: 0;
+      color: #065f46;
+    }
+
+    .example h3::before {
+      content: "📌 ";
+    }
+
+    .solution {
+      background-color: #ffffff;
+      border: 1px dashed #34d399;
+      padding: 1em;
+      margin-top: 1em;
+      border-radius: 6px;
+    }
+
+    /* Merk */
+    .note {
+      background-color: #fff7ed;
+      border-left: 6px solid #f59e0b;
+      padding: 1.2em 1.5em;
+      margin: 2em 0;
+      border-radius: 8px;
+    }
+
+    .note strong::before {
+      content: "⚠️ ";
+    }
+
+    /* Programkode */
+    .codebox {
+      background-color: #0f172a;
+      color: #e5e7eb;
+      padding: 1.5em;
+      border-radius: 10px;
+      margin: 2em 0;
+      overflow-x: auto;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .codebox::before {
+      content: "💻 Programkode";
+      display: block;
+      color: #34d399;
+      margin-bottom: 0.8em;
+      font-weight: bold;
+    }
+
+    /* ===========================
+   Mobiltilpasning
+   =========================== */
+
+@media (max-width: 700px) {
+
+  body {
+    padding: 1em;
+    font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  /* Bokser: mindre padding på mobil */
+  .example,
+  .definition,
+  .note,
+  .codebox {
+    padding: 1em;
+    margin: 1.5em 0;
+  }
+
+  /* Bilder: litt større på mobil */
+  img {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  /* Programkode: lettere å lese */
+  .codebox {
+    font-size: 0.9rem;
+  }
+
+}
+
+/* ===== Skriv til PDF-knapp ===== */
+
+.print-button {
+  display: block;
+  margin: 1.5em auto;
+  padding: 0.6em 1.4em;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.print-button:hover {
+  background-color: #059669;
+}
+
+/* Skjul knappen på mobil */
+@media (max-width: 700px) {
+  .print-button {
+    display: none;
+  }
+}
+
+@media print {
+  .print-button {
+    display: none;
+  }
+}
+
+
+/* ===========================
+   PDF / Utskrift
+   =========================== */
+
+@media print {
+
+  /* Generelle marger for A4 */
+  body {
+    margin: 1.5cm;
+    background: white;
+  }
+
+  /* Overskrifter starter på ny side */
+  h1,
+  h2 {
+    page-break-before: always;
+  }
+
+  /* Aldri del disse boksene over sider */
+  .definition,
+  .example,
+  .note,
+  .codebox {
+    page-break-inside: avoid;
+  }
+
+  /* Tillat at løsninger deles om nødvendig */
+  .solution {
+    page-break-inside: auto;
+  }
+
+  /* Bilder bør heller flyttes enn å deles */
+  img {
+    page-break-inside: avoid;
+  }
+
+  /* PDF skal ikke vise knappen */
+  .print-button {
+    display: none !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+  </style>
+</head>
+
+<body>
+<a href="../index.html" class="no-print">← Tilbake til hovedsiden</a>
+<button class="print-button" onclick="window.print()">
+  🖨️ Skriv til PDF
+</button>
+
+<h1>Trigonometri</h1>
+
+<p><strong>Sammendrag:</strong></p>
+
+<ul>
+  <li>
+    Radianer:
+    \[
+      v = v^{\text{o}}\cdot \frac{2\pi}{360^{\text{o}}}
+    \]
+  </li>
+
+  <li>
+    Enhetssirkelen:
+    <img src="enhet.png" alt="Enhetssirkelen" style="width: 30%;">
+  </li>
+
+  <li>
+    Sinusfunksjon:
+    <img src="sinoppskrift.png" alt="Sinusfunksjon" style="width: 45%;">
+  </li>
+
+  <li>
+    Enhetsformelen:
+    \[
+      \sin^2 v + \cos^2 v = 1
+    \]
+  </li>
+
+  <li>
+    Summeformler:
+    \[
+    \begin{aligned}
+    \cos(u+v) &= \cos u\cdot \cos v - \sin u\cdot \sin v \\
+    \sin(u+v) &= \sin u\cdot \cos v + \cos u\cdot \sin v \\
+    \sqrt{a^2+b^2}\sin(kx+\varphi)
+    &= a\cdot \sin kx + b\cdot \cos kx
+    \end{aligned}
+    \]
+  </li>
+
+  <li>
+    Derivasjonsregler:
+    \[
+      (\sin x)' = \cos x
+      \quad \text{og} \quad
+      (\cos x)' = -\sin x
+    \]
+  </li>
+</ul>
+
+<section>
+<h2>Radianer</h2>
+
+<div class="definition">
+  <h3>Radianer</h3>
+
+  <p>
+    Radianer er forholdet mellom lengden av en sirkelbue og radius:
+  </p>
+
+  <img src="radian.png" alt="Radianer" style="width: 25%;">
+
+  <p>
+    Dermed er sammenhengen mellom \(v\) radianer og \(v\) grader:
+  </p>
+
+  \[
+    v = v^{\text{o}}\cdot \frac{2\pi}{360^{\text{o}}}
+  \]
+</div>
+
+<div class="note">
+  <strong>Merk:</strong><br>
+  Vi måler positive vinkler opp fra \(x\)-aksen, mot klokka.
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Bestem vinkelen i radianer og lengden av sirkelbuen.
+  </p>
+
+  <img src="radian2.png" alt="Eksempel med radianer" style="width: 25%;">
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    \[
+      v = -30^{\text{o}}\cdot \frac{2\pi}{360^{\text{o}}}
+      = -\frac{\pi}{6}
+      \quad,\quad
+      b = \frac{\pi}{6}\cdot 2 = \frac{\pi}{3}
+    \]
+
+    <p>
+      For å angi vinkelen kan vi også gå med klokka, og si at vinkelen er
+    </p>
+
+    \[
+      v = 330^{\text{o}}\cdot \frac{2\pi}{360^{\text{o}}}
+      = \frac{11\pi}{6}
+    \]
+  </div>
+</div>
+</section>
+
+<section>
+<h2>Enhetssirkelen</h2>
+
+<div class="definition">
+  <h3>Enhetssirkelen</h3>
+
+  <p>
+    Sinus og cosinus defineres utfra enhetssirkelen, altså en sirkel med
+    \(r=1\):
+  </p>
+
+  <img src="enhet.png" alt="Enhetssirkelen" style="width: 35%;">
+
+  <p>
+    Trekanten til høyre viser sammenhengen mellom enhetssirkelen og
+    definisjonene
+  </p>
+
+  \[
+    \sin v =
+    \frac{\text{motstående katet}}{\text{hypotenus}}
+    \quad,\quad
+    \cos v =
+    \frac{\text{hosliggende katet}}{\text{hypotenus}}
+  \]
+
+  <p>
+    hvor vi bruker at hypotenus \(=1\), siden \(r=1\).
+  </p>
+</div>
+
+<img src="eksakt.png" alt="Eksakte trigonometriske verdier" style="width: 35%;">
+
+<p>
+  Ved hjelp av enhetssirkelen, pytagoras og trekantene ovenfor, kan vi utlede
+  følgende eksakte sinus-, cosinus- og tangensverdier:
+</p>
+
+<table style="width: 100%; border-collapse: collapse; text-align: center; margin: 2em 0;">
+  <tr>
+    <th>\(v\)</th>
+    <th>\(0\)</th>
+    <th>\(30^{\text{o}}\)</th>
+    <th>\(45^{\text{o}}\)</th>
+    <th>\(60^{\text{o}}\)</th>
+    <th>\(90^{\text{o}}\)</th>
+    <th>\(120^{\text{o}}\)</th>
+    <th>\(135^{\text{o}}\)</th>
+    <th>\(150^{\text{o}}\)</th>
+    <th>\(180^{\text{o}}\)</th>
+  </tr>
+
+  <tr>
+    <td>\(\sin v\)</td>
+    <td>\(0\)</td>
+    <td>\(\frac{1}{2}\)</td>
+    <td>\(\frac{\sqrt{2}}{2}\)</td>
+    <td>\(\frac{\sqrt{3}}{2}\)</td>
+    <td>\(1\)</td>
+    <td>\(\frac{\sqrt{3}}{2}\)</td>
+    <td>\(\frac{\sqrt{2}}{2}\)</td>
+    <td>\(\frac{1}{2}\)</td>
+    <td>\(0\)</td>
+  </tr>
+
+  <tr>
+    <td>\(\cos v\)</td>
+    <td>\(1\)</td>
+    <td>\(\frac{\sqrt{3}}{2}\)</td>
+    <td>\(\frac{\sqrt{2}}{2}\)</td>
+    <td>\(\frac{1}{2}\)</td>
+    <td>\(0\)</td>
+    <td>\(-\frac{1}{2}\)</td>
+    <td>\(-\frac{\sqrt{2}}{2}\)</td>
+    <td>\(-\frac{\sqrt{3}}{2}\)</td>
+    <td>\(-1\)</td>
+  </tr>
+
+  <tr>
+    <td>\(\tan v\)</td>
+    <td>\(0\)</td>
+    <td>\(\frac{1}{\sqrt{3}}\)</td>
+    <td>\(1\)</td>
+    <td>\(\sqrt{3}\)</td>
+    <td>\(\pm\infty\)</td>
+    <td>\(-\sqrt{3}\)</td>
+    <td>\(-1\)</td>
+    <td>\(-\frac{1}{\sqrt{3}}\)</td>
+    <td>\(0\)</td>
+  </tr>
+</table>
+</section>
+
+<section>
+<h2>"Enkle" trigonometriske likninger</h2>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Løs likningen
+  </p>
+
+  \[
+    2\cos(4\pi x-\pi)-1=0
+    \quad,\quad
+    x\in[0,1]
+  \]
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>
+      Vi skriver om likningen slik at \(\cos(\ldots)\) står alene:
+    </p>
+
+    \[
+      \cos(4\pi x-\pi)=\frac{1}{2}
+    \]
+
+    <p>
+      Vi bruker enhetssirkelen for å se hva som må stå inni "magen" til
+      \(\cos\):
+    </p>
+
+    <img src="cosmage.png" alt="Cosinus i enhetssirkelen" style="width: 30%;">
+
+    <p>
+      Altså har vi
+    </p>
+
+    \[
+    \begin{aligned}
+    4\pi x-\pi = \frac{\pi}{3}
+    \quad &\vee \quad
+    4\pi x-\pi = \frac{5\pi}{3} \\
+    4\pi x = \frac{4\pi}{3}
+    \quad &\vee \quad
+    4\pi x = \frac{8\pi}{3} \\
+    x = \frac{1}{3}
+    \quad &\vee \quad
+    x = \frac{2}{3}
+    \end{aligned}
+    \]
+
+    <p>
+      Begge løsningene er i definisjonsområdet \(x\in[0,1]\).
+    </p>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>Trigonometriske identiteter</h2>
+
+<div class="definition">
+  <h3>Definisjon</h3>
+
+  \[
+    (\sin x)^2 \overset{\text{def}}{=} \sin^2 x
+    \quad,\quad
+    (\cos x)^2 \overset{\text{def}}{=} \cos^2 x
+  \]
+</div>
+
+<div class="definition">
+  <h3>Enhetsformelen (pytagoras)</h3>
+
+  \[
+    \sin^2 x+\cos^2 x=1
+  \]
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Løs likningen
+  </p>
+
+  \[
+    \cos^2 x - 3\sin^2 x = -2
+    \quad,\quad
+    x\in[0,2\pi]
+  \]
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>
+      Vi bruker enhetsformelen til å skrive om likningen:
+    </p>
+
+    \[
+    \begin{aligned}
+    \cos^2 x - 3\sin^2 x &= -2 \\
+    1-\sin^2 x - 3\sin^2 x &= -2 \\
+    -4\sin^2 x &= -3 \\
+    \sin x &= \pm \frac{\sqrt{3}}{2}
+    \end{aligned}
+    \]
+
+    <p>
+      Fra enhetssirkelen kan vi lese av at \(x\)-verdiene som passer til dette er
+    </p>
+
+    \[
+      x=\frac{\pi}{3}
+      \vee
+      x=\frac{2\pi}{3}
+      \vee
+      x=\frac{4\pi}{3}
+      \vee
+      x=\frac{5\pi}{3}
+    \]
+  </div>
+</div>
+
+<div class="definition">
+  <h3>Sum og differanse av vinkler</h3>
+
+  \[
+  \begin{aligned}
+  \sin(u+v) &= \sin u\cos v+\cos u\sin v \\
+  \cos(u+v) &= \cos u\cos v-\sin u\sin v
+  \end{aligned}
+  \]
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  \[
+  \begin{aligned}
+  \sin(105^{\text{o}})
+  &=
+  \sin(60^{\text{o}}+45^{\text{o}}) \\
+  &=
+  \sin 60^{\text{o}}\cdot \cos 45^{\text{o}}
+  +
+  \cos 60^{\text{o}}\cdot \sin 45^{\text{o}} \\
+  &=
+  \frac{\sqrt{3}}{2}\cdot \frac{\sqrt{2}}{2}
+  +
+  \frac{1}{2}\cdot \frac{\sqrt{2}}{2}
+  =
+  \frac{\sqrt{6}+\sqrt{2}}{4}
+  \end{aligned}
+  \]
+</div>
+</section>
+
+<section>
+<h2>Trigonometriske funksjoner</h2>
+
+<div class="definition">
+  <h3>Sinusgraf</h3>
+
+  <img src="sinoppskrift.png" alt="Sinusgraf" style="width: 45%;">
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Bestem et uttrykk på formen
+  </p>
+
+  \[
+    f(x)=a\cdot \sin(kx+c)+d
+  \]
+
+  <p>
+    for funksjonsuttrykket til grafen nedenfor.
+  </p>
+
+  <img src="sineks.png" alt="Eksempel på sinusgraf" style="width: 45%;">
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>
+      Vi leser av amplituden, likevektslinja, perioden og fasen:
+    </p>
+
+    \[
+      f(x)
+      =
+      3\cdot \sin\left(\frac{2\pi}{3}\cdot(x-2)\right)+1
+      =
+      3\sin\left(\frac{2\pi}{3}\cdot x-\frac{4\pi}{3}\right)+1
+    \]
+  </div>
+</div>
+
+<div class="definition">
+  <h3>Cosinusgraf</h3>
+
+  <img src="cosoppskrift.png" alt="Cosinusgraf" style="width: 45%;">
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Bestem et uttrykk på formen
+  </p>
+
+  \[
+    f(x)=a\cdot \cos(kx+c)+d
+  \]
+
+  <p>
+    for funksjonsuttrykket til grafen nedenfor.
+  </p>
+
+  <img src="sineks.png" alt="Eksempel på cosinusgraf" style="width: 45%;">
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>
+      Vi leser av amplituden, likevektslinja, perioden og fasen:
+    </p>
+
+    \[
+      f(x)
+      =
+      3\cdot
+      \cos\left(
+      \frac{2\pi}{3}\cdot
+      \left(x-\left(-\frac{1}{4}\right)\right)
+      \right)
+      +1
+      =
+      3\cos\left(\frac{2\pi}{3}\cdot x+\frac{\pi}{6}\right)+1
+    \]
+  </div>
+</div>
+
+<div class="definition">
+  <h3>Sammensatt trigonometrisk funksjon</h3>
+
+  \[
+    a\cdot \sin kx + b\cdot \cos kx
+    =
+    \sqrt{a^2+b^2}\,\sin(kx+\varphi)
+  \]
+
+  <p>
+    hvor fasen \(\varphi\) oppfyller følgende:
+  </p>
+
+  \[
+    \cos(\varphi)=\frac{a}{\sqrt{a^2+b^2}}
+    \quad \text{og} \quad
+    \sin(\varphi)=\frac{b}{\sqrt{a^2+b^2}}
+  \]
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Funksjonen \(f\) er gitt ved
+  </p>
+
+  \[
+    f(x)=\sqrt{3}\sin 2x-\cos 2x
+  \]
+
+  <p>
+    Skriv \(f\) på formen \(f(x)=A\sin(kx+c)\).
+  </p>
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>
+      Fra teoremet over får vi
+    </p>
+
+    \[
+      f(x)
+      =
+      \sqrt{(\sqrt{3})^2+(-1)^2}\,
+      \sin(2x+\varphi)
+      =
+      2\sin(2x+\varphi)
+    \]
+
+    <p>
+      hvor fasen \(\varphi\) skal oppfylle
+    </p>
+
+    \[
+      \cos(\varphi)=\frac{\sqrt{3}}{2}
+      \quad \text{og} \quad
+      \sin(\varphi)=\frac{-1}{2}
+    \]
+
+    <p>
+      Ved å bruke enhetssirkelen ser vi at
+      \(\varphi=-\frac{\pi}{6}\), som gir
+    </p>
+
+    \[
+      f(x)=2\sin\left(2x-\frac{\pi}{6}\right)
+    \]
+  </div>
+</div>
+</section>
+
+</body>
+</html>

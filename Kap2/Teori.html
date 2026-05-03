@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Integrasjon</title>
+
+  <!-- MathJax -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      max-width: 900px;
+      margin: auto;
+      line-height: 1.6;
+      background-color: #fafafa;
+    }
+
+    h1, h2, h3 {
+      margin-top: 2em;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      margin: 1em auto;
+    }
+
+    /* ---------- BOKSER ---------- */
+
+    /* Definisjon */
+    .definition {
+      background-color: #ecfeff;
+      border-left: 6px solid #0891b2;
+      padding: 1.2em 1.5em;
+      margin: 2em 0;
+      border-radius: 8px;
+    }
+
+    .definition h3::before {
+      content: "📘 ";
+    }
+
+    /* Eksempel */
+    .example {
+      background-color: #ecfdf5;
+      border: 2px solid #10b981;
+      border-left-width: 6px;
+      padding: 1.2em 1.5em;
+      margin: 2em 0;
+      border-radius: 10px;
+    }
+
+    .example h3 {
+      margin-top: 0;
+      color: #065f46;
+    }
+
+    .example h3::before {
+      content: "📌 ";
+    }
+
+    .solution {
+      background-color: #ffffff;
+      border: 1px dashed #34d399;
+      padding: 1em;
+      margin-top: 1em;
+      border-radius: 6px;
+    }
+
+    /* Merk */
+    .note {
+      background-color: #fff7ed;
+      border-left: 6px solid #f59e0b;
+      padding: 1.2em 1.5em;
+      margin: 2em 0;
+      border-radius: 8px;
+    }
+
+    .note strong::before {
+      content: "⚠️ ";
+    }
+
+    /* Programkode */
+    .codebox {
+      background-color: #0f172a;
+      color: #e5e7eb;
+      padding: 1.5em;
+      border-radius: 10px;
+      margin: 2em 0;
+      overflow-x: auto;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .codebox::before {
+      content: "💻 Programkode";
+      display: block;
+      color: #34d399;
+      margin-bottom: 0.8em;
+      font-weight: bold;
+    }
+
+    /* ===========================
+   Mobiltilpasning
+   =========================== */
+
+@media (max-width: 700px) {
+
+  body {
+    padding: 1em;
+    font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  /* Bokser: mindre padding på mobil */
+  .example,
+  .definition,
+  .note,
+  .codebox {
+    padding: 1em;
+    margin: 1.5em 0;
+  }
+
+  /* Bilder: litt større på mobil */
+  img {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  /* Programkode: lettere å lese */
+  .codebox {
+    font-size: 0.9rem;
+  }
+
+}
+
+/* ===== Skriv til PDF-knapp ===== */
+
+.print-button {
+  display: block;
+  margin: 1.5em auto;
+  padding: 0.6em 1.4em;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.print-button:hover {
+  background-color: #059669;
+}
+
+/* Skjul knappen på mobil */
+@media (max-width: 700px) {
+  .print-button {
+    display: none;
+  }
+}
+
+@media print {
+  .print-button {
+    display: none;
+  }
+}
+
+
+/* ===========================
+   PDF / Utskrift
+   =========================== */
+
+@media print {
+
+  /* Generelle marger for A4 */
+  body {
+    margin: 1.5cm;
+    background: white;
+  }
+
+  /* Overskrifter starter på ny side */
+  h1,
+  h2 {
+    page-break-before: always;
+  }
+
+  /* Aldri del disse boksene over sider */
+  .definition,
+  .example,
+  .note,
+  .codebox {
+    page-break-inside: avoid;
+  }
+
+  /* Tillat at løsninger deles om nødvendig */
+  .solution {
+    page-break-inside: auto;
+  }
+
+  /* Bilder bør heller flyttes enn å deles */
+  img {
+    page-break-inside: avoid;
+  }
+
+  /* PDF skal ikke vise knappen */
+  .print-button {
+    display: none !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+  </style>
+</head>
+
+<body>
+<a href="../index.html" class="no-print">← Tilbake til hovedsiden</a>
+<button class="print-button" onclick="window.print()">
+  🖨️ Skriv til PDF
+</button>
+
+<h1>Integrasjon</h1>
+
+<p><strong>Sammendrag:</strong></p>
+
+<ul>
+  <li>
+    Integrasjon og areal:
+    <img src="BestemtInt2.png" alt="Integrasjon og areal" style="width: 60%;">
+  </li>
+
+  <li>
+    Fundamentalteoremene:
+    \[
+      \int_a^b f(x)\,dx = F(b)-F(a)
+      \quad \text{og} \quad
+      \int f(x)\,dx = F(x)+C,
+      \quad \text{hvor } F'(x)=f(x)
+    \]
+  </li>
+
+  <li>
+    Numerisk integrasjon:
+    \[
+      \text{while-løkke med } A \rightarrow A + f(x)\cdot dx
+      \quad \text{og} \quad
+      x \rightarrow x + dx
+    \]
+  </li>
+
+  <li>
+    Volum av omdreiningslegeme:
+    \[
+      V = \pi \int_a^b f(x)^2\,dx
+    \]
+  </li>
+
+  <li>
+    Overflateareal av omdreiningslegeme:
+    \[
+      A = 2\pi \int_a^b f(x)\sqrt{f'(x)^2+1}\,dx
+    \]
+  </li>
+
+  <li>
+    Variabelbytte:
+    \[
+      \int f(x)\,dx = \int g(u)\frac{du}{u'}
+    \]
+  </li>
+
+  <li>
+    Delvis integrasjon:
+    \[
+      \int uv'\,dx = uv - \int u'v\,dx
+    \]
+  </li>
+
+  <li>
+    Delbrøkoppspalting:
+    \[
+      \int \frac{ax+b}{(x-x_1)(x-x_2)}\,dx
+      =
+      \int \left(
+      \frac{A}{x-x_1}+\frac{B}{x-x_2}
+      \right)\,dx
+    \]
+  </li>
+</ul>
+
+<section>
+<h2>Bestemt integral</h2>
+
+<div class="definition">
+  <h3>Bestemt integral</h3>
+
+  <p>
+    Integralet av \(f(x)\) fra \(x=a\) til \(x=b\) er definert slik:
+  </p>
+
+  <img src="BestemtInt2.png" alt="Bestemt integral" style="width: 60%;">
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>Bestem integralet</p>
+
+  \[
+    \int_1^2 \left(-x^2+2x+1\right)\,dx
+  \]
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <img src="arealUnder.png" alt="Areal under graf" style="width: 60%;">
+
+    \[
+    \int_1^2 \left(-x^2+2x+1\right)\,dx
+    \approx A_{\text{trapes}} 
+    = \frac{f(1)+f(2)}{2}\cdot 1 
+    = \frac{2+1}{2}\cdot 1
+    = \frac{3}{2}
+    = 1,5
+    \]
+
+    <p>
+      I GeoGebra kan vi skrive
+      <strong>Integral(-x**2 + 2*x + 1, 1, 2)</strong>.
+      Vi får da det et mer nøyaktig areal på 1,67.
+    </p>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>Numerisk integrasjon</h2>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    For å bestemme integraler numerisk er det vanlig å dele opp arealet
+    mellom grafen og \(x\)-aksen i rektangler:
+  </p>
+
+  <img src="IntegralRek.png" alt="Numerisk integrasjon med rektangler" style="width: 70%;">
+
+  \[
+  \begin{aligned}
+  \int_{-1}^{7} f(x)\,dx \approx \sum f(x)\,\Delta x 
+  &= f(-1)\cdot 2 + f(1)\cdot 2 + f(3)\cdot 2 + f(5)\cdot 2 \\
+  &= \left(11+27+35+35\right)\cdot 2 = 108
+  \end{aligned}
+  \]
+</div>
+
+<p>
+  Ved å bruke programmering kan vi enkelt dele opp arealet i smalere
+  rektangler, og dermed enkelt finne en bedre tilnærming til integralet:
+</p>
+
+<div class="codebox">
+<pre>
+def f(x):
+   return -x**2 + 8*x + 20 # Funksjonen som skal integrerers
+
+S = 0 # Startverdi for summen (integralet)
+x = -1 # Startverdi for x
+dx = 0.0001 # Rektangelbredde
+
+while x < 7:
+    S = S + f(x)*dx # Summen øker med arealet av et raktangel
+    x = x + dx # x-verdien øker
+print(S) # Skriver ut summen (integralet)
+</pre>
+</div>
+</section>
+
+<section>
+<h2>Bruk av bestemt integrasjon</h2>
+
+<p>
+  Integrasjon brukes i veldig mange praktiske sammenhenger.
+</p>
+
+<p>
+  I praktiske sammenhengene hvor vi kan bruke rekker,
+  er det ofte mer riktig og/eller enklere å bruke integrasjon.
+</p>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    En bedrift slipper ut 20 000 tonn CO\(_2\) i 2018.
+    De har et mål om å redusere de årlige utslippene med 15 %
+    hvert år fra og med 2019.
+  </p>
+
+  <p>
+    Hvor mye slipper de ut i løpet av de ti årene 2018–2027?
+  </p>
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>Hvis utslippet reduseres 1. januar hvert år:</p>
+
+    \[
+      20\,000 + 20\,000\cdot 0,85
+      + 20\,000\cdot 0,85^2
+      + \cdots
+      + 20\,000\cdot 0,85^9
+      =
+      107\,083
+    \]
+
+    <p>Hvis utslippet reduseres kontinuerlig:</p>
+
+    \[
+      \int_0^{10} 20\,000\cdot 0,85^x\,dx = 98\,835
+    \]
+
+    <p>
+      Arealet av det skraverte området viser integralet, og arealet av
+      søylene viser summen av rekken:
+    </p>
+
+    <img src="CO2.png" alt="CO2-utslipp som integral og rekke" style="width: 75%;">
+  </div>
+</div>
+</section>
+
+<section>
+<h2>Fundamentalteoremet</h2>
+
+<div class="definition">
+  <h3>Fundamentalteoremet</h3>
+
+  <p>For bestemte integral gjelder</p>
+
+  \[
+    \int_a^b f(x)\,dx = F(b)-F(a),
+    \quad \text{hvor } F'(x)=f(x)
+  \]
+
+  <p>og for <strong>ubestemte integral</strong> gjelder</p>
+
+  \[
+    \int f(x)\,dx = F(x)+C,
+    \quad \text{hvor } F'(x)=f(x)
+    \text{ og } C \text{ er en konstant}
+  \]
+</div>
+
+<p>
+    Når vi integrerer skal vi altså <em>antiderivere</em>. Det er derfor lurt å repetere noen derivasjonsregler.
+</p>
+
+  \[
+    \begin{aligned}
+    \left( x^n \right)' &= n \cdot x^{n-1} \\
+    \left(  e^u \right)' &= u' \cdot e^u \\
+    \left(  \ln u \right)' &= \frac{1}{u} \cdot u' \\
+    \left( u \cdot v \right)' &= u' \cdot v + u \cdot v'
+    \end{aligned}
+    \]
+
+  <p>
+        I tillegg til disse regelen, har vi noen nye regler i R2:
+  </p>
+
+   \[
+  \begin{aligned}
+  (\sin(u))' &= u'\cdot \cos(u) \\
+  (\cos(u))' &= -u'\cdot \sin(u)
+  \end{aligned}
+  \]
+
+  <p>
+      Reglene med \(\sin \) og \(\cos \) gjelder når vi bruker <em>radianer</em> som vinkelmål istedenfor grader. Dette blir forklart i kapittelet om trigonometri.
+  </p>
+
+  <div class="example">
+  <h3>Eksempel</h3>
+
+  \[
+    f(x)=3\cdot \sin\left(\frac{\pi}{2}x-\pi\right)
+    \quad \Rightarrow \quad
+    f'(x)=\frac{3\pi}{2}\cdot
+    \cos\left(\frac{\pi}{2}x-\pi\right)
+  \]
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  \[
+    \int 3\cdot \sin\left(\frac{\pi}{2}x-\pi\right)\,dx
+    =
+    -\frac{6}{\pi}\cdot
+    \cos\left(\frac{\pi}{2}x-\pi\right)+C
+  \]
+
+  <p>
+    fordi
+  </p>
+
+  \[
+    \left(
+    -\frac{6}{\pi}\cdot
+    \cos\left(\frac{\pi}{2}x-\pi\right)
+    \right)'
+    =
+    3\cdot \sin\left(\frac{\pi}{2}x-\pi\right)
+  \]
+</div>
+
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Bestem integralene og gi en praktisk tolkning av det bestemte integralet.
+  </p>
+
+  \[
+    \int \left(-x^2+2x+1\right)\,dx
+    \quad \text{og} \quad
+    \int_1^2 \left(-x^2+2x+1\right)\,dx
+  \]
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>Det ubestemte integralet er</p>
+
+    \[
+      \int \left(-x^2+2x+1\right)\,dx
+      =
+      -\frac{x^3}{3}+x^2+x+C
+    \]
+
+    <p>Det bestemte integralet er</p>
+
+    \[
+    \begin{aligned}
+    \int_1^2 \left(-x^2+2x+1\right)\,dx
+    &=
+    \left[-\frac{x^3}{3}+x^2+x\right]_1^2 \\
+    &=
+    \left(-\frac{2^3}{3}+2^2+2\right)
+    -
+    \left(-\frac{1^3}{3}+1^2+1\right) =  \frac{10}{3}-\frac{5}{3} = \frac{5}{3}
+    \end{aligned}
+    \]
+
+    <p>
+      Det bestemte integralet er den eksakte verdien for arealet \(A\) i figuren:
+    </p>
+
+    <img src="arealUnder.png" alt="Areal under graf" style="width: 60%;">
+  </div>
+</div>
+</section>
+
+<section>
+<h2>Integrasjonsmetoder</h2>
+
+<div class="definition">
+  <h3>Delvis integrasjon</h3>
+
+  <p>Fra produktregelen i derivasjon får vi</p>
+
+  \[
+  \begin{aligned}
+  u'\cdot v + u\cdot v' &= (u\cdot v)' \\
+  \int u'\cdot v\,dx + \int u\cdot v'\,dx &= u\cdot v \\
+  \int u\cdot v'\,dx &= u\cdot v - \int u'\cdot v\,dx
+  \end{aligned}
+  \]
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>Bestem integralet</p>
+
+  \[
+    \int 2x\cdot e^{3x}\,dx
+  \]
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    \[
+    \begin{aligned}
+    \int \overbrace{2x}^{u}\cdot \overbrace{e^{3x}}^{v'}\,dx
+    &=
+    \overbrace{2x}^{u}\cdot
+    \overbrace{\frac{e^{3x}}{3}}^{v}
+    -
+    \int
+    \overbrace{2}^{u'}\cdot
+    \overbrace{\frac{e^{3x}}{3}}^{v}\,dx \\
+    &=
+    2x\cdot \frac{e^{3x}}{3}
+    -
+    2\cdot \frac{e^{3x}}{9}
+    + C
+    \end{aligned}
+    \]
+  </div>
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>Bestem integralet</p>
+
+  \[
+    \int 2x\cdot \ln x\,dx
+  \]
+
+  <div class="solution">
+    <strong>Løsning</strong>
+
+    <p>
+      Her er det lurt å sette \(u=\ln x\) og \(v'=2x\).
+    </p>
+
+    \[
+    \begin{aligned}
+    \int \overbrace{\ln x}^{u}\cdot \overbrace{2x}^{v'}\,dx
+    &=
+    \overbrace{\ln x}^{u}\cdot \overbrace{x^2}^{v}
+    -
+    \int
+    \overbrace{\frac{1}{x}}^{u'}\cdot
+    \overbrace{x^2}^{v}\,dx \\
+    &=
+    \ln x\cdot x^2
+    -
+    \int \frac{x}{2}\,dx \\
+    &=
+    \ln x\cdot x^2
+    -
+    \frac{x^2}{4}
+    + C
+    \end{aligned}
+    \]
+  </div>
+</div>
+
+<div class="definition">
+  <h3>Variabelbytte</h3>
+
+  <p>
+    Med kjerneregelen i derivasjon ganger vi med den deriverte av kjernen:
+  </p>
+
+  \[
+    f'(x) = g'(u)\cdot u'
+  \]
+
+  <p>
+    Med variabelbytte i integrasjon deler vi med den deriverte av kjernen:
+  </p>
+
+  \[
+    \int f(x)\,dx = \int g(u)\frac{du}{u'}
+  \]
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+Variabelbytte kan forstås best ved å studere noen eksempler:
+  \[
+  \begin{aligned}
+  \int e^{2x}\,dx
+  =
+  \int e^u\frac{du}{2}
+  &=
+  e^u\cdot \frac{1}{2}+C \\
+  &=
+  \frac{e^{2x}}{2}+C
+  \end{aligned}
+  \]
+
+  \[
+  \begin{aligned}
+  \int (2x-1)^5\,dx
+  =
+  \int u^5\frac{du}{2}
+  &=
+  \frac{u^6}{6}\cdot \frac{1}{2}+C \\
+  &=
+  \frac{(2x-1)^5}{12}+C
+  \end{aligned}
+  \]
+
+  \[
+  \begin{aligned}
+  \int \frac{1}{2x-1}\,dx
+  =
+  \int \frac{1}{u}\frac{du}{2}
+  &=
+  \ln u\cdot \frac{1}{2}+C \\
+  &=
+  \frac{\ln(2x-1)}{2}+C
+  \end{aligned}
+  \]
+
+  \[
+  \begin{aligned}
+  \int \frac{2x+5}{x^2+5x+6}\,dx
+  =
+  \int \frac{\cancel{2x+5}}{u}
+  \frac{du}{\cancel{2x+5}}
+  =
+  \int \frac{1}{u}\,du
+  &=
+  \ln u+C \\
+  &=
+  \ln(x^2+5x+6)+C
+  \end{aligned}
+  \]
+
+  \[
+  \begin{aligned}
+  \int x\cdot e^{x^2}\,dx
+  =
+  \int \cancel{x}\cdot e^u
+  \frac{du}{2\cancel{x}}
+  =
+  \int e^u\frac{du}{2}
+  &=
+  \frac{e^u}{2}+C \\
+  &=
+  \frac{e^{x^2}}{2}+C
+  \end{aligned}
+  \]
+</div>
+
+<div class="definition">
+  <h3>Delbrøkoppspalting</h3>
+
+  \[
+  \int \frac{ax+b}{(x-x_1)(x-x_2)}\,dx
+  =
+  \int \left(
+  \frac{A}{x-x_1}
+  +
+  \frac{B}{x-x_2}
+  \right)\,dx 
+  =
+  A\ln(x-x_1)
+  +
+  B\ln(x-x_2)
+  + C
+  \]
+</div>
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  \[
+  \int \frac{2}{x^2+5x+6}\,dx
+  =
+  \int \frac{2}{(x+2)(x+3)}\,dx 
+  =
+  \int \left(
+  \frac{A}{x+2}
+  +
+  \frac{B}{x+3}
+  \right)\,dx 
+  =
+  A\ln(x+2)+B\ln(x+3)+C
+  \]
+
+  <p>For å bestemme \(A\) og \(B\) bruker vi at</p>
+
+  \[
+  \begin{aligned}
+  \frac{2}{(x+2)(x+3)}
+  &=
+  \frac{A}{x+2}
+  +
+  \frac{B}{x+3} \\
+  2
+  &=
+  A(x+3)+B(x+2)
+  \quad \text{(har ganget med fellesnevner)} \\
+  2
+  &=
+  A
+  \quad \text{(har satt inn } x=-2\text{)} \\
+  2
+  &=
+  -B
+  \quad \text{(har satt inn } x=-3\text{)}
+  \end{aligned}
+  \]
+
+  <p>Integralet er dermed</p>
+
+  \[
+    \int \frac{2}{x^2+5x+6}\,dx
+    =
+    2\ln(x+2)-2\ln(x+3)+C
+  \]
+</div>
+
+<div class="note">
+  <strong>Merk:</strong><br>
+  Det finnes ingen enkel regel for når du skal bruke hvilken
+  integrasjonsmetode, men en "tommelfingerregel" er at det er lurt å først
+  undersøke om det går an å bruke variabelbytte, siden det er enklest. Den eneste faste, enkle regelen i integrasjon er at den deriverte av svaret
+  skal bli integranden
+  (integranden = <em>det som integreres</em>).
+</div>
+
+</section>
+
+<section>
+<h2>Omdreiningslegemer</h2>
+
+<div class="definition">
+  <h3>Volum og overflateareal</h3>
+
+  <p>
+    Når arealet mellom \(f\) og \(x\)-aksen roteres \(360^\circ\) rundt
+    \(x\)-aksen i intervallet \(x\in[a,b]\), er volumet av
+    omdreiningslegemet
+  </p>
+
+  \[
+    V = \pi \int_a^b \left(f(x)\right)^2\,dx
+  \]
+
+  <p>
+    og arealet av overflaten til omdreiningslegemet er
+  </p>
+
+  \[
+    A = 2\pi \int_a^b f(x)
+    \sqrt{\left(f'(x)\right)^2+1}\,dx
+  \]
+</div>
+
+<img src="Rotasjon.png" alt="Omdreiningslegeme" style="width: 50%;">
+
+<div class="example">
+  <h3>Eksempel</h3>
+
+  <p>
+    Volumet av omdreiningslegemet ovenfor er
+  </p>
+
+  \[
+    V =
+    \pi \int_1^5 \frac{1}{x^2}\,dx
+    =
+    \pi\left[-\frac{1}{x}\right]_1^5
+    =
+    \pi\left(-\frac{1}{5}+\frac{1}{1}\right)
+    =
+    \frac{4\pi}{5}
+  \]
+
+  <p>
+    Overflatearealet er
+  </p>
+
+  \[
+    A =
+    2\pi \int_1^5
+    \frac{1}{x}
+    \sqrt{\frac{1}{x^4}+1}\,dx
+    \approx 1,72
+  \]
+</div>
+</section>
+
+</body>
+</html>
