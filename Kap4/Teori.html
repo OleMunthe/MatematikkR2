@@ -33,14 +33,23 @@
     .definition {
       background-color: #ecfeff;
       border-left: 6px solid #0891b2;
-      padding: 1.2em 1.5em;
-      margin: 2em 0;
+     padding: 1em 1.5em 0.7em 1.5em;
+      margin: 0em 0;
       border-radius: 8px;
     }
 
     .definition h3::before {
       content: "📘 ";
     }
+
+    .definition h3 {
+  margin-top: 0;
+}
+
+.definition > :last-child {
+  margin-bottom: 0;
+}
+
 
     /* Eksempel */
     .example {
@@ -321,7 +330,7 @@
     transform: scale(1);
     transform-origin: top left;
   }
-}
+}}
   </style>
 </head>
 
@@ -338,16 +347,9 @@
 
 <ul>
   <li>
-    Vektor mellom punkter:  
+    Vektor og avstand mellom punkter:  
     \[
-      \overrightarrow{AB} = [\Delta x, \Delta y, \Delta z]
-    \]
-  </li>
-
-  <li>
-    Avstand mellom punkter:
-    \[
-      \left|\overrightarrow{AB}\right|
+      \overrightarrow{AB} = [\Delta x, \Delta y, \Delta z]\;\;\;\; \text{ og }\;\;\;\;       \left|\overrightarrow{AB}\right|
       =
       \sqrt{\Delta x^2+\Delta y^2+\Delta z^2}
     \]
@@ -363,18 +365,11 @@
   </li>
 
   <li>
-    Skalarprodukt:
+    Skalar- og vektorprodukt:
     \[
       \vec{u}\cdot \vec{v}
       =
-      |\vec{u}|\cdot|\vec{v}|\cdot \cos\alpha
-    \]
-  </li>
-
-  <li>
-    Vektorprodukt:
-    \[
-      [a_x,a_y,a_z]\times[b_x,b_y,b_z]
+      |\vec{u}|\cdot|\vec{v}|\cdot \cos\alpha\;\;\;\; \text{ og }    \;\;\;\;   [a_x,a_y,a_z]\times[b_x,b_y,b_z]
       =
       \begin{vmatrix}
       \vec{e}_x & \vec{e}_y & \vec{e}_z\\
@@ -383,6 +378,7 @@
       \end{vmatrix}
     \]
   </li>
+
 
   <li>
     Areal av trekant \(ABC\):
@@ -407,14 +403,7 @@
   <li>
     Likning for plan:
     \[
-      ax+by+cz+d=0
-    \]
-  </li>
-
-  <li>
-    Normalvektor plan:
-    \[
-      \vec{n}=[a,b,c]
+      ax+by+cz+d=0 \;\;\;\;\text{ med normalvektor }\;\;\;\;      \vec{n}=[a,b,c]
     \]
   </li>
 

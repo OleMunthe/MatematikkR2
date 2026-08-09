@@ -29,18 +29,26 @@
 
     /* ---------- BOKSER ---------- */
 
-    /* Definisjon */
+        /* Definisjon */
     .definition {
       background-color: #ecfeff;
       border-left: 6px solid #0891b2;
-      padding: 1.2em 1.5em;
-      margin: 2em 0;
+     padding: 1em 1.5em 0.7em 1.5em;
+      margin: 0em 0;
       border-radius: 8px;
     }
 
     .definition h3::before {
       content: "📘 ";
     }
+
+    .definition h3 {
+  margin-top: 0;
+}
+
+.definition > :last-child {
+  margin-bottom: 0;
+}
 
     /* Eksempel */
     .example {
@@ -321,7 +329,7 @@
     transform: scale(1);
     transform-origin: top left;
   }
-}
+}}
   </style>
 </head>
 
@@ -599,10 +607,9 @@ print(S) # Skriver ut summen (integralet)
   <h3>Eksempel</h3>
 
   \[
-    f(x)=3\cdot \sin\left(\frac{\pi}{2}x-\pi\right)
+    f(x)=3\cdot e^{2x}
     \quad \Rightarrow \quad
-    f'(x)=\frac{3\pi}{2}\cdot
-    \cos\left(\frac{\pi}{2}x-\pi\right)
+    f'(x)=6\cdot e^{2x}
   \]
 </div>
 
@@ -610,24 +617,11 @@ print(S) # Skriver ut summen (integralet)
   <h3>Eksempel</h3>
 
   \[
-    \int 3\cdot \sin\left(\frac{\pi}{2}x-\pi\right)\,dx
+    \int 3\cdot e^{2x}\,dx
     =
-    -\frac{6}{\pi}\cdot
-    \cos\left(\frac{\pi}{2}x-\pi\right)+C
+    \frac{3}{2}\cdot e^{2x} +C
   \]
 
-  <p>
-    fordi
-  </p>
-
-  \[
-    \left(
-    -\frac{6}{\pi}\cdot
-    \cos\left(\frac{\pi}{2}x-\pi\right)
-    \right)'
-    =
-    3\cdot \sin\left(\frac{\pi}{2}x-\pi\right)
-  \]
 </div>
 
 

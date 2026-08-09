@@ -33,14 +33,22 @@
     .definition {
       background-color: #ecfeff;
       border-left: 6px solid #0891b2;
-      padding: 1.2em 1.5em;
-      margin: 2em 0;
+     padding: 1em 1.5em 0.7em 1.5em;
+      margin: 0em 0;
       border-radius: 8px;
     }
 
     .definition h3::before {
       content: "📘 ";
     }
+
+    .definition h3 {
+  margin-top: 0;
+}
+
+.definition > :last-child {
+  margin-bottom: 0;
+}
 
     /* Eksempel */
     .example {
@@ -108,7 +116,7 @@
   border-left: 6px solid #64748b;
   padding: 1em 1.2em;
   margin: -1em 0 2em 0;
-  border-radius: 8px;
+  border-radius: 0.5px;
   font-family: Consolas, Monaco, monospace;
   white-space: pre-wrap;
 }
@@ -118,7 +126,7 @@
   display: block;
   font-weight: bold;
   color: #475569;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.1em;
 }
 
 
@@ -321,7 +329,7 @@
     transform: scale(1);
     transform-origin: top left;
   }
-}
+}}
   </style>
 </head>
 
@@ -421,13 +429,14 @@
 \]
 
 <p>
-  Vi sjekker at formelen er riktig for ledd nr. 2 og 3:
+  Vi sjekker at formelen er riktig for ledd nr. 2, 3 og 4:
 </p>
 
 \[
 \begin{aligned}
 a_2 &= a_{2-1} + 2 = a_1 + 2 = 1 + 2 = 3 \\
-a_3 &= a_{3-1} + 3 = a_2 + 3 = 3 + 3 = 6
+a_3 &= a_{3-1} + 3 = a_2 + 3 = 3 + 3 = 6 \\
+a_4 &= a_{4-1} + 4 = a_3 + 4 = 6 + 4 = 10
 \end{aligned}
 \]
 
@@ -470,15 +479,32 @@ a_3 &= \frac{3\cdot(3+1)}{2} = \frac{12}{2} = 6
 
 <div class="codebox">
 <pre>
-a = 1 # Første ledd
-S = a # Startverdi for summen
+a = 0 # Startverdi a
+S = 0 # Startverdi for summen
 N = 10 # Antall ledd
 
-for n in range(2, N+1):
-    a = a + n # Den rekursive sammenhengen
-    S = S + a # Summen øker
-print(S)
+for n in range(1, N+1):
+  a = a + n # Den rekursive sammenhengen
+  S = S + a # Summen øker
+  print(n, a, S)
 </pre>
+</div>
+<div class="outputbox">
+<pre>1 1 1
+2 3 4
+3 6 10
+4 10 20
+5 15 35
+6 21 56
+7 28 84
+8 36 120
+9 45 165
+10 55 220</pre>
+</div>
+
+<div class="note">
+  <strong>Merk:</strong> Når vi lager et program med rekker eller følger, er det lurt å skrive ut verdiene for hver utregning, selv om oppgaven bare spør om den siste verdien.
+  Da kan vi kontrollere at programmet er riktig, ved å se at de første verdiene stemmer.
 </div>
 
 </section>
@@ -1069,6 +1095,11 @@ print(S)
       \vdots
     \]
 
+        <p>
+      Beløpet fra den siste måneden er
+      \(1000\).
+    </p>
+
     <p>
       Det totale beløpet er
     </p>
@@ -1123,13 +1154,7 @@ print(S)
   </div>
 </div>
 
-<div class="note">
-  <strong>NB:</strong><br>
-  Det går ofte raskest å bruke formler når vi jobber med praktiske oppgaver,
-  slik som i eksemplene ovenfor. Men noen ganger kan det være hensiktsmessig
-  å bruke Excel eller programmering, så ha Excel og Python i bakhodet når du
-  løser oppgaver.
-</div>
+
 </section>
 </div>
 </body>
