@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="no">
+<link rel="stylesheet" href="FlervalgsStyle.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0877ab">
+    <title>Matematikk R2</title> 
+
+    <style>
+        h1 {
+            font-size: 50px; 
+            font-weight: bold; 
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        header {
+            background: #0877ab;
+            color: white;
+            padding: 3px 0;
+            text-align: center;
+        }
+
+        .hero {
+    background-color: #0877ab;
+    padding: 60px 20px;
+    min-height: 500px;
+}
+
+        
+        /* 📱 Skjul bakgrunnsbilde på mobil */
+        @media (max-width: 768px) {
+        .hero {
+        background-image: none;
+        background-color: #0877ab; /* valgfri ensfarget bakgrunn */
+        }
+        }
+
+        main {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 0 15px rgba(0,0,0,0.35);
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+            margin: 20px;
+        }
+
+        a {
+            color: #8B0000;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+
+
+
+
+
+/* Inkludere for å få med teori */
+        .teori-link {
+  margin-left: 12px;
+  padding: 4px 10px;
+  background-color: #0877ab;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.teori-link:hover {
+  background-color: #055f88;
+}
+
+/* Skjul teori-lenker på mobil */
+@media (max-width: 768px) {
+  .teori-link {
+    display: none;
+  }
+}
+
+.app-link-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.app-link-list li {
+  margin-bottom: 14px;
+}
+
+.app-link {
+  display: inline-block;
+  padding: 12px 18px;
+  background-color: #ffffff;
+  color: #0877ab;
+  border: 2px solid #0877ab;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  min-width: 220px;
+  text-align: center;
+}
+
+.app-link:hover {
+  background-color: #0877ab;
+  color: white;
+}
+    </style>
+</head>
+
+<body>
+
+<div class="hero">
+    <main>
+  
+       
+<ul class="app-link-list">
+  <li>
+    <a class="app-link" href="./Kap1/Oppgave1.html" onclick="velgKategori('Kap1')">Følger og rekker</a>
+    <a class="teori-link" href="./Kap1/Teori.html">Teori</a>
+  </li>
+
+  <li>
+    <a class="app-link" href="./Kap2/Oppgave1.html" onclick="velgKategori('Kap2')">Integrasjon</a>
+    <a class="teori-link" href="./Kap2/Teori.html">Teori</a>
+  </li>
+
+  <li>
+    <a class="app-link" href="./Kap3/Oppgave1.html" onclick="velgKategori('Kap3')">Trigonometri</a>
+    <a class="teori-link" href="./Kap3/Teori.html">Teori</a>
+  </li>
+
+  <li>
+    <a class="app-link" href="./Kap4/Oppgave1.html" onclick="velgKategori('Kap4')">Romgeometri</a>
+    <a class="teori-link" href="./Kap4/Teori.html">Teori</a>
+  </li>
+</ul>
+
+       
+    </main>
+</div>
+
+<script>
+    
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+
+function velgKategori(kategori) {
+
+    const TOTAL = {
+        Kap1: 55, Kap2: 67, Kap3: 74, Kap4: 74
+    };
+
+    // Nullstill resultatene når et nytt emne startes.
+    const storageKey = `quizData_${kategori}`;
+    localStorage.removeItem(storageKey);
+    sessionStorage.removeItem("harStartet");
+
+    // Bruk ALLE oppgavene i kronologisk rekkefølge:
+    // Oppgave1.html, Oppgave2.html, Oppgave3.html, ...
+    const alleOppgaver = [];
+    for (let i = 1; i <= (TOTAL[kategori] || 1); i++) {
+        alleOppgaver.push(i);
+    }
+
+    sessionStorage.setItem("valgtKategori", kategori);
+    sessionStorage.setItem("aktivtOppgavesett", JSON.stringify(alleOppgaver));
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
