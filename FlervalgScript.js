@@ -1,7 +1,9 @@
-// =========================================================
-// LYD
-// =========================================================
-
+/* =========================================================
+   ANTALL OPPGAVER‑VELGER (kun på index.html)
+   Injiseres automatisk hvis .app-link-list finnes
+   ========================================================= */
+// Korte lydeffekter uten eksterne lydfiler.
+// Web Audio starter først etter brukerinteraksjon, som passer fint for quiz-knappene.
 function playQuizSound(type) {
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     if (!AudioCtx) return;
@@ -43,29 +45,29 @@ function playQuizSound(type) {
     }
 
     if (type === "correct") {
-        tone(783.99, now + 0.18, 0.28, 0.09);
-        tone(1046.50, now + 0.27, 0.32, 0.07);
+
+        // Lys, positiv "pling-plong-ding"
+        tone(783.99, now + 0.18, 0.28, 0.09); // G5
+        tone(1046.50, now + 0.27, 0.32, 0.07); // C6
+
     } else if (type === "wrong") {
-        tone(220, now, 0.16, 0.055, "triangle");
+
+        // Kort og myk feil-lyd
+        tone(220, now,        0.16, 0.055, "triangle");
         tone(185, now + 0.08, 0.22, 0.045, "triangle");
     }
 }
 
-
-// =========================================================
-// Riktig
-// =========================================================
-
 function showPointPopup() {
     let popup = document.getElementById("pointPopup");
 
+    // Opprett popup automatisk hvis den ikke finnes i HTML-en
     if (!popup) {
         popup = document.createElement("div");
         popup.id = "pointPopup";
         popup.textContent = "Riktig!";
 
         const box = document.querySelector(".box");
-
         if (box) {
             box.appendChild(popup);
         } else {
@@ -73,64 +75,98 @@ function showPointPopup() {
         }
     }
 
+    // Start animasjonen på nytt
     popup.classList.remove("show");
     void popup.offsetWidth;
     popup.classList.add("show");
 }
 
 
-// =========================================================
-// QUIZ-LOGIKK
-// =========================================================
+document.addEventListener("DOMContentLoaded", () => {
 
-// Finn oppgavenummer fra filnavnet.
-// Eksempel: Oppgave17.html gir OPPGAVE_ID = 17.
+    // Sett default én gang
+    if (!sessionStorage.getItem("antallOppgaver")) {
+        sessionStorage.setItem("antallOppgaver", "10");
+    }
 
+    const liste = document.querySelector(".app-link-list");
+    if (!liste) return; // Ikke på index.html
+
+    // Unngå duplikater ved reload/navigasjon
+    if (document.querySelector(".antall-velger")) return;
+
+    const velger = document.createElement("div");
+    velger.className = "antall-velger";
+    velger.innerHTML = `
+        <button data-n="10">10 oppgaver</button>
+        <button data-n="20">20 oppgaver</button>
+        <button data-n="30">30 oppgaver</button>
+    `;
+
+    liste.parentElement.insertBefore(velger, liste);
+
+    const aktivtAntall = sessionStorage.getItem("antallOppgaver");
+
+    velger.querySelectorAll("button").forEach(btn => {
+
+        if (btn.dataset.n === aktivtAntall) {
+            btn.classList.add("aktiv");
+        }
+
+        btn.addEventListener("click", () => {
+            velger.querySelectorAll("button")
+                .forEach(b => b.classList.remove("aktiv"));
+
+            btn.classList.add("aktiv");
+            sessionStorage.setItem("antallOppgaver", btn.dataset.n);
+        });
+    });
+});
+
+
+/* =========================================================
+   QUIZ‑LOGIKK
+   ========================================================= */
+
+// Finn oppgave‑ID fra filnavn
 const path = window.location.pathname;
 const match = path.match(/Oppgave(\d+)\.html/i);
 const OPPGAVE_ID = match ? parseInt(match[1], 10) : 1;
 
-
-// Hvilket kapittel/emne brukeren arbeider med
-
-const kategori =
-    sessionStorage.getItem("valgtKategori") || "standard";
-
+const kategori = sessionStorage.getItem("valgtKategori") || "standard";
 const STORAGE_KEY = `quizData_${kategori}`;
 
-
-// Hent hele oppgavesettet som index.html har laget.
-// Dette skal være:
-// [1, 2, 3, 4, 5, ...]
-
-let aktivtSett =
-    JSON.parse(sessionStorage.getItem("aktivtOppgavesett"));
-
-
-// Sikkerhet hvis siden åpnes direkte uten index.html
-
+// Aktivt oppgavesett
+let aktivtSett = JSON.parse(sessionStorage.getItem("aktivtOppgavesett"));
 if (!Array.isArray(aktivtSett) || aktivtSett.length === 0) {
     aktivtSett = [OPPGAVE_ID];
 }
 
-
-// =========================================================
-// NULLSTILL VED NY RUNDE
-// =========================================================
-
+// ✅ Hvis vi starter på Oppgave1, hopp videre til en tilfeldig første oppgave
 if (
     OPPGAVE_ID === 1 &&
-    !sessionStorage.getItem("harStartet")
+    !sessionStorage.getItem("harStartet") &&
+    Array.isArray(aktivtSett) &&
+    aktivtSett.length > 0
 ) {
+    const tilfeldigStart =
+        aktivtSett[Math.floor(Math.random() * aktivtSett.length)];
+
+    sessionStorage.setItem("harStartet", "true");
+
+    if (tilfeldigStart !== 1) {
+        window.location.replace(`Oppgave${tilfeldigStart}.html`);
+    }
+}
+
+
+// Reset lagret data ved nytt sett
+if (OPPGAVE_ID === 1 && !sessionStorage.getItem("harStartet")) {
     localStorage.removeItem(STORAGE_KEY);
     sessionStorage.setItem("harStartet", "true");
 }
 
-
-// =========================================================
-// LAGRING
-// =========================================================
-
+// Hent / lagre data
 function hentData() {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
         riktige: [],
@@ -138,19 +174,11 @@ function hentData() {
     };
 }
 
-
 function lagreData(data) {
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(data)
-    );
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-
-// =========================================================
-// STATUS
-// =========================================================
-
+// Init statusfelt
 function initUI() {
     document.getElementById("riktig").textContent = 0;
     document.getElementById("feil").textContent = 0;
@@ -158,48 +186,35 @@ function initUI() {
     document.getElementById("progress").style.width = "0%";
 }
 
-
+// Oppdater status
 function oppdaterStatus() {
     const data = hentData();
 
     const antallRiktig = data.riktige.length;
-
-    const antallFeil =
-        Object.values(data.feil)
-            .reduce((sum, v) => sum + v, 0);
+    const antallFeil = Object.values(data.feil)
+        .reduce((sum, v) => sum + v, 0);
 
     const besvart = antallRiktig + antallFeil;
 
-    document.getElementById("riktig").textContent =
-        antallRiktig;
-
-    document.getElementById("feil").textContent =
-        antallFeil;
+    document.getElementById("riktig").textContent = antallRiktig;
+    document.getElementById("feil").textContent = antallFeil;
 
     const prosent = besvart
         ? Math.round((antallRiktig / besvart) * 100)
         : 0;
 
-    document.getElementById("prosent").textContent =
-        prosent;
+    document.getElementById("prosent").textContent = prosent;
 
-    const progress =
-        Math.floor(
-            (antallRiktig / aktivtSett.length) * 100
-        );
+    const progress = Math.floor(
+        (antallRiktig / aktivtSett.length) * 100
+    );
 
-    document.getElementById("progress").style.width =
-        progress + "%";
+    document.getElementById("progress").style.width = progress + "%";
 }
 
-
-// =========================================================
-// FERDIG
-// =========================================================
-
+// Ferdig‑visning
 function visFerdig() {
     const boks = document.querySelector(".box");
-
     if (!boks) return;
 
     boks.innerHTML = `
@@ -210,126 +225,105 @@ function visFerdig() {
 }
 
 
-// =========================================================
-// SVAR
-// =========================================================
+/* =========================================================
+   SVARHÅNDTERING
+   ========================================================= */
+
+// Stokk svarrekkefølge
+function stokkeSvar() {
+    const quiz = document.getElementById("quiz");
+    if (!quiz) return;
+
+    const svar = Array.from(quiz.children);
+    for (let i = svar.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [svar[i], svar[j]] = [svar[j], svar[i]];
+    }
+
+    svar.forEach(el => quiz.appendChild(el));
+}
+
+// Kjør før event listeners
+stokkeSvar();
 
 document.querySelectorAll(".svar").forEach(label => {
-
     label.addEventListener("click", () => {
-
         const data = hentData();
 
-        // Ikke svar på nytt hvis oppgaven allerede er riktig.
+        // Blokker hvis allerede riktig
         if (data.riktige.includes(OPPGAVE_ID)) return;
 
         const input = label.querySelector("input");
         const verdi = input.value;
 
-        label.classList.add(
-            verdi === "riktig" ? "riktig" : "feil"
-        );
-
-
-        // Lås svaralternativene etter at eleven har svart.
+        label.classList.add(verdi === "riktig" ? "riktig" : "feil");
 
         document.querySelectorAll(".svar").forEach(l => {
             l.querySelector("input").disabled = true;
             l.style.pointerEvents = "none";
         });
 
-
         if (verdi === "riktig") {
-
             data.riktige.push(OPPGAVE_ID);
-
             playQuizSound("correct");
+              // ✅ Vis tydelig +1 point
             showPointPopup();
-
         } else {
-
-            data.feil[OPPGAVE_ID] =
-                (data.feil[OPPGAVE_ID] || 0) + 1;
-
+            data.feil[OPPGAVE_ID] = (data.feil[OPPGAVE_ID] || 0) + 1;
             playQuizSound("wrong");
-        }
 
+        }
 
         lagreData(data);
         oppdaterStatus();
 
+        if (data.riktige.length === aktivtSett.length) {
+            visFerdig();
+            return;
+        }
 
-        // Vis Neste spørsmål-knappen.
-        document.getElementById("neste").style.display =
-            "inline-block";
+        document.getElementById("neste").style.display = "inline-block";
     });
 });
 
-
-// =========================================================
-// NESTE SPØRSMÅL
-// =========================================================
-
+// Neste spørsmål
 function nesteSporsmal() {
-
     const data = hentData();
 
-
-    // Hvis svaret var feil:
-    // vis samme oppgave igjen.
-
+    // Hvis denne oppgaven ikke er besvart riktig,
+    // vis samme oppgave på nytt.
     if (!data.riktige.includes(OPPGAVE_ID)) {
-
-        window.location.href =
-            `Oppgave${OPPGAVE_ID}.html`;
-
+        window.location.href = `Oppgave${OPPGAVE_ID}.html`;
         return;
     }
 
+    // Finn oppgaver som ennå ikke er besvart riktig
+    const gjenstaar = aktivtSett.filter( 
+        id => !data.riktige.includes(id)
+    );
 
-    // Finn hvor denne oppgaven ligger i settet.
-
-    const posisjon =
-        aktivtSett.indexOf(OPPGAVE_ID);
-
-
-    // Hvis dette var siste oppgave:
-    // vis ferdig-siden.
-
-    if (
-        posisjon === -1 ||
-        posisjon === aktivtSett.length - 1
-    ) {
+    if (gjenstaar.length === 0) {
         visFerdig();
         return;
     }
 
-
-    // Gå til neste oppgave i kronologisk rekkefølge.
-
+    // Velg tilfeldig neste oppgave
     const neste =
-        aktivtSett[posisjon + 1];
+        gjenstaar[Math.floor(Math.random() * gjenstaar.length)];
 
-    window.location.href =
-        `Oppgave${neste}.html`;
+    window.location.href = `Oppgave${neste}.html`;
 }
 
 
-// =========================================================
-// START
-// =========================================================
+/* =========================================================
+   INIT
+   ========================================================= */
 
 initUI();
 oppdaterStatus();
 
-
-// Hvis ferdig-siden lastes på nytt
-
+// Edge‑case: reload etter ferdig
 const sluttData = hentData();
-
-if (
-    aktivtSett.length > 0 &&
-    sluttData.riktige.length >= aktivtSett.length
-) {
+if (sluttData.riktige.length === aktivtSett.length) {
     visFerdig();
 }
