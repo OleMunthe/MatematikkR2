@@ -8,332 +8,22 @@
   <!-- MathJax -->
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      max-width: 900px;
-      margin: auto;
-      line-height: 1.6;
-      background-color: #fafafa;
-    }
-
-    h1, h2, h3 {
-      margin-top: 2em;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-      margin: 1em auto;
-    }
-
-    /* ---------- BOKSER ---------- */
-
-        /* Definisjon */
-    .definition {
-      background-color: #ecfeff;
-      border-left: 6px solid #0891b2;
-     padding: 1em 1.5em 0.7em 1.5em;
-      margin: 0em 0;
-      border-radius: 8px;
-    }
-
-    .definition h3::before {
-      content: "📘 ";
-    }
-
-    .definition h3 {
-  margin-top: 0;
-}
-
-.definition > :last-child {
-  margin-bottom: 0;
-}
-
-    /* Eksempel */
-    .example {
-      background-color: #ecfdf5;
-      border: 2px solid #10b981;
-      border-left-width: 6px;
-      padding: 1.2em 1.5em;
-      margin: 2em 0;
-      border-radius: 10px;
-    }
-
-    .example h3 {
-      margin-top: 0;
-      color: #065f46;
-    }
-
-    .example h3::before {
-      content: "📌 ";
-    }
-
-    .solution {
-      background-color: #ffffff;
-      border: 1px dashed #34d399;
-      padding: 1em;
-      margin-top: 1em;
-      border-radius: 6px;
-    }
-
-    /* Merk */
-    .note {
-      background-color: #fff7ed;
-      border-left: 6px solid #f59e0b;
-      padding: 1.2em 1.5em;
-      margin: 2em 0;
-      border-radius: 8px;
-    }
-
-    .note strong::before {
-      content: "⚠️ ";
-    }
-
-    /* Programkode */
-    .codebox {
-      background-color: #0f172a;
-      color: #e5e7eb;
-      padding: 1.5em;
-      border-radius: 10px;
-      margin: 2em 0;
-      overflow-x: auto;
-      font-family: Consolas, Monaco, monospace;
-    }
-
-    .codebox::before {
-      content: "💻 Programkode";
-      display: block;
-      color: #34d399;
-      margin-bottom: 0.8em;
-      font-weight: bold;
-    }
-
-    .outputbox {
-  background-color: #f8fafc;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
-  border-left: 6px solid #64748b;
-  padding: 1em 1.2em;
-  margin: -1em 0 2em 0;
-  border-radius: 8px;
-  font-family: Consolas, Monaco, monospace;
-  white-space: pre-wrap;
-}
-
-.outputbox::before {
-  content: "🖨️ Utskrift";
-  display: block;
-  font-weight: bold;
-  color: #475569;
-  margin-bottom: 0.5em;
-}
-
-
-.formel-tabell table {
-    border-collapse: collapse;
-    margin: 1rem auto;
-}
-.formel-tabell td {
-    border: 1px solid #999;
-    padding: 18px 28px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.kode-tabell {
-    margin: 1rem 0;
-    overflow-x: auto;
-}
-
-.kode-tabell table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-.kode-tabell td {
-    border: 1px solid #999;
-    padding: 12px 16px;
-    vertical-align: top;
-}
-
-.kode-tabell td:first-child {
-    font-weight: bold;
-    white-space: nowrap;
-    width: 22%;
-    background-color: #f8f8f8;
-}
-
-.kode-tabell code {
-    font-family: Consolas, Monaco, "Courier New", monospace;
-    font-size: 0.95em;
-}
-
-.kode-tabell pre {
-    margin: 0;
-    white-space: pre;
-    overflow-x: auto;
-}
-
-
-    /* ===========================
-   Mobiltilpasning
-   =========================== */
-
-@media (max-width: 700px) {
-    .kode-tabell td {
-        padding: 8px 10px;
-    }
-
-    .kode-tabell code,
-    .kode-tabell pre {
-        font-size: 0.85em;
-    }
-  body {
-    padding: 1em;
-    font-size: 1rem;
-  }
-
-  h1 {
-    font-size: 1.7rem;
-  }
-
-  h2 {
-    font-size: 1.4rem;
-  }
-
-  h3 {
-    font-size: 1.2rem;
-  }
-
-  /* Bokser: mindre padding på mobil */
-  .example,
-  .definition,
-  .note,
-  .codebox {
-    padding: 1em;
-    margin: 1.5em 0;
-  }
-  .outputbox {
-  padding: 1em;
-  margin: 1.5em 0;
-}
-
-  /* Bilder: litt større på mobil */
-  img {
-    width: 100% !important;
-    max-width: 100%;
-  }
-
-  /* Programkode: lettere å lese */
-  .codebox {
-    font-size: 0.9rem;
-  }
-
-}
-
-/* ===== Skriv til PDF-knapp ===== */
-
-.print-button {
-  display: block;
-  margin: 1.5em auto;
-  padding: 0.6em 1.4em;
-  font-size: 1rem;
-  font-weight: bold;
-  background-color: #10b981;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.print-button:hover {
-  background-color: #059669;
-}
-
-/* Skjul knappen på mobil */
-@media (max-width: 700px) {
-  .print-button {
-    display: none;
-  }
-}
-
-@media print {
-  .print-button {
-    display: none;
-  }
-}
-
-
-/* ===========================
-   PDF / Utskrift
-   =========================== */
-
-@media print {
-
-  /* Generelle marger for A4 */
-  body {
-    margin: 1.5cm;
-    background: white;
-  }
-
-  /* Overskrifter starter på ny side */
-  h1,
-  h2 {
-    page-break-before: always;
-  }
-
-  /* Aldri del disse boksene over sider */
-  .definition,
-  .example,
-  .note,
-  .codebox {
-    page-break-inside: avoid;
-  }
-  .outputbox {
-  page-break-inside: avoid;
-}
-
-  /* Tillat at løsninger deles om nødvendig */
-  .solution {
-    page-break-inside: auto;
-  }
-
-  /* Bilder bør heller flyttes enn å deles */
-  img {
-    page-break-inside: avoid;
-  }
-
-  /* PDF skal ikke vise knappen */
-  .print-button {
-    display: none !important;
-  }
-}
-@media print {
-  .no-print {
-    display: none;
-  }
-@page {
-  size: A4;
-  margin: 1.5cm;
-}
-
-@media print {
-  html, body {
-    margin: 0;
-    padding: 0;
-  }
-
-  .print-scale {
-    width: 900px;
-    transform: scale(1);
-    transform-origin: top left;
-  }
-}}
-  </style>
+<link rel="stylesheet" href="styleTeori.css">
 </head>
 
 <body>
+<nav class="side-menu" aria-label="Innholdsfortegnelse">
+<strong>Innhold</strong>
+<a href="#del-0">Sammendrag</a>
+<a href="#del-1">Bestemt integral</a>
+<a href="#del-11">Numerisk integrasjon</a>
+<a href="#del-12">Praktisk bruk av bestemt integrasjon</a>
+<a href="#del-2">Fundamentalteoremet</a>
+<a href="#del-23">Praktisk bruk av antiderivasjon</a>
+<a href="#del-3">Integrasjonsmetoder</a>
+<a href="#del-4">Omdreiningslegemer</a>
+</nav>
+
 <div class="print-scale">
 <a href="../index.html" class="no-print">← Tilbake til hovedsiden</a>
 <button class="print-button" onclick="window.print()">
@@ -342,6 +32,7 @@
 
 <h1>Integrasjon</h1>
 
+<section id="del-0">
 <p><strong>Sammendrag:</strong></p>
 
 <ul>
@@ -408,8 +99,9 @@
     \]
   </li>
 </ul>
+</section>
 
-<section>
+<section id="del-1">
 <h2>Bestemt integral</h2>
 
 <div class="definition">
@@ -442,19 +134,15 @@
     = \frac{f(1)+f(2)}{2}\cdot 1 
     = \frac{2+1}{2}\cdot 1
     = \frac{3}{2}
-    = 1,5
+    = 1\text{,}5
     \]
 
-    <p>
-      I GeoGebra kan vi skrive
-      <strong>Integral(-x**2 + 2*x + 1, 1, 2)</strong>.
-      Vi får da det et mer nøyaktig areal på 1,67.
-    </p>
+
   </div>
 </div>
 </section>
 
-<section>
+<section id="del-11">
 <h2>Numerisk integrasjon</h2>
 
 <div class="example">
@@ -498,7 +186,7 @@ print(S) # Skriver ut summen (integralet)
 </div>
 </section>
 
-<section>
+<section id="del-12">
 <h2>Bruk av bestemt integrasjon</h2>
 
 <p>
@@ -514,6 +202,7 @@ print(S) # Skriver ut summen (integralet)
   <h3>Eksempel</h3>
 
   <p>
+    <img src="co22.png" alt="CO2-utslipp bedrift" style="width: 42%;">
     En bedrift slipper ut 20 000 tonn CO\(_2\) i 2018.
     De har et mål om å redusere de årlige utslippene med 15 %
     hvert år fra og med 2019.
@@ -526,18 +215,18 @@ print(S) # Skriver ut summen (integralet)
   <div class="solution">
     <strong>Løsning</strong>
 
-    <p>Hvis utslippet reduseres 1. januar hvert år:</p>
+    <p>Hvis utslippet reduseres 1. januar hvert år, blir utslippet en geometrisk rekke:</p>
 
     \[
-      20\,000 + 20\,000\cdot 0,85
-      + 20\,000\cdot 0,85^2
+      20\,000 + 20\,000\cdot 0\text{,}85
+      + 20\,000\cdot 0\text{,}85^2
       + \cdots
-      + 20\,000\cdot 0,85^9
-      =
+      + 20\,000\cdot 0\text{,}85^9
+      = 20\,000 \cdot \frac{0\text{,}85^{10}- 1 }{0\text{,}85 - 1} =
       107\,083
     \]
 
-    <p>Hvis utslippet reduseres kontinuerlig:</p>
+    <p>Hvis utslippet reduseres kontinuerlig, blir totalt utslipp et integragral, som vi f.eks. kan løse med programmering:</p>
 
     \[
       \int_0^{10} 20\,000\cdot 0,85^x\,dx = 98\,835
@@ -553,7 +242,12 @@ print(S) # Skriver ut summen (integralet)
 </div>
 </section>
 
-<section>
+
+
+
+
+
+<section id="del-2">
 <h2>Fundamentalteoremet</h2>
 
 <div class="definition">
@@ -672,7 +366,60 @@ print(S) # Skriver ut summen (integralet)
 </div>
 </section>
 
-<section>
+
+
+<section id="del-23">
+<h2>Praktisk bruk av antiderivasjon</h2>
+Antiderivasjon er sentralt i mange praktiske sammenhenger, særlig i fysikk. 
+F.eks. kan vi utlede bevegelseslikningene med antiderivasjon:<br><br>
+
+Når akselerasjonen \(a\) er konstant, gir definisjon av akselerasjon (den deriverte av fart) og antiderivasjon uttrykket for fart:
+\[  a(t) = v'(t) \;\;\; \Rightarrow \;\;  v(t) = \int a \, dt = at + C \]
+I uttrykket over kan vi tolke integrasjonskonstanten \(C\) som startfart \(v_0\), altså er
+\[ v(t) = at + v_0 \]
+Definisjonen av fart (den deriverte av strekning) gir videre at
+\[ v(t) = s'(t) \;\;\; \Rightarrow \;\;\; s(t) = \int \left(  a\cdot t + v_0 \right) \, dt = \frac{1}{2} at^2 + v_0 t + C \]
+hvor \(C=0\) siden startstrekningen er null.
+
+<div class="example">
+  <h3>Eksempel</h3>
+      <img src="basehopper.png" alt="Basehopper" style="width: 42%;">
+En basehopper hopper fra Prekestolen. Ved \(t=0\) sekunder er farten null.<br><br>
+
+Akselerasjonen, målt i m/s\(^2\) er \(a\) = 9,81\(e^{-0\text{,}10 \cdot t}\).<br><br>
+
+Bestem strekningen han har tilbakelagt etter 3,0 sekunder.
+
+  <div class="solution">
+    <strong>Løsning</strong><br>
+Farten er gitt ved 
+\[  v(t) = \int 9\text{,}81 \cdot e^{-0\text{,}10 \cdot t} \, dt = -98\text{,}1 \cdot e^{-0\text{,}10 \cdot t} + C \]
+hvor \(C\) = 98,1 slik at \(v(0)\) = 0 m/s.
+
+Strekningen er dermed
+\[ s(t) = \int \left(  -98\text{,}1 \cdot e^{-0\text{,}10 \cdot t} + 98\text{,}1 \right) \, dt = 981 \cdot e^{-0\text{,}10 \cdot t} + 98\text{,}1 \cdot t + C\]
+hvor \(C\) = \(-\)981, slik at \(s(0)\) = 0 meter.
+
+Etter 3,0 sekunder er da strekningen
+\[ s(3)  = 981 \cdot e^{-0\text{,}10 \cdot t} + 98\text{,}1 \cdot t - 981 = 40 \text{ meter} \]
+(uten luftmotstand ville strekningen vært 44 meter)
+</div>
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+<section id="del-3">
 <h2>Integrasjonsmetoder</h2>
 
 <div class="definition">
@@ -776,78 +523,45 @@ print(S) # Skriver ut summen (integralet)
   </p>
 
   \[
-    \int f(x)\,dx = \int g(u)\frac{du}{u'}
+    \int f(x)\,dx = \int \frac{g(u)}{u'} \, du
   \]
 </div>
 
 <div class="example">
   <h3>Eksempel</h3>
 Variabelbytte kan forstås best ved å studere noen eksempler:
-  \[
-  \begin{aligned}
-  \int e^{2x}\,dx
-  =
-  \int e^u\frac{du}{2}
-  &=
-  e^u\cdot \frac{1}{2}+C \\
-  &=
-  \frac{e^{2x}}{2}+C
-  \end{aligned}
-  \]
+\[
+\begin{alignedat}{2}
+&\text{Eksempel 1: }\int e^{2x}\,dx
+&\quad &= \int \frac{e^u}{2} \, du
+= \frac{e^u}{2}+C
+= \frac{e^{2x}}{2}+C \\[8pt]
 
-  \[
-  \begin{aligned}
-  \int (2x-1)^5\,dx
-  =
-  \int u^5\frac{du}{2}
-  &=
-  \frac{u^6}{6}\cdot \frac{1}{2}+C \\
-  &=
-  \frac{(2x-1)^5}{12}+C
-  \end{aligned}
-  \]
+&\text{Eksempel 2: }\int (2x-1)^5\,dx
+&\quad &= \int \frac{u^5}{2} \, du
+= \frac{u^6}{12}+C
+= \frac{(2x-1)^6}{12}+C \\[8pt]
 
-  \[
-  \begin{aligned}
-  \int \frac{1}{2x-1}\,dx
-  =
-  \int \frac{1}{u}\frac{du}{2}
-  &=
-  \ln u\cdot \frac{1}{2}+C \\
-  &=
-  \frac{\ln(2x-1)}{2}+C
-  \end{aligned}
-  \]
+&\text{Eksempel 3: }\int \frac{1}{2x-1}\,dx
+&\quad &= \int \frac{1}{2u}\,du
+= \frac{\ln|u|}{2}+C
+= \frac{\ln|2x-1|}{2}+C \\[8pt]
 
-  \[
-  \begin{aligned}
-  \int \frac{2x+5}{x^2+5x+6}\,dx
-  =
-  \int \frac{\cancel{2x+5}}{u}
-  \frac{du}{\cancel{2x+5}}
-  =
-  \int \frac{1}{u}\,du
-  &=
-  \ln u+C \\
-  &=
-  \ln(x^2+5x+6)+C
-  \end{aligned}
-  \]
+&\text{Eksempel 4: }\int \frac{2x+5}{x^2+5x+6}\,dx
+&\quad &= \int \frac{\cancel{2x+5}}{u \cancel{(2x+5)}}
+\, du
+= \int \frac{1}{u}\,du
+= \ln|u|+C
+= \ln|x^2+5x+6|+C \\[8pt]
 
-  \[
-  \begin{aligned}
-  \int x\cdot e^{x^2}\,dx
-  =
-  \int \cancel{x}\cdot e^u
-  \frac{du}{2\cancel{x}}
-  =
-  \int e^u\frac{du}{2}
-  &=
-  \frac{e^u}{2}+C \\
-  &=
-  \frac{e^{x^2}}{2}+C
-  \end{aligned}
-  \]
+&\text{Eksempel 5: }\int x\cdot e^{x^2}\,dx
+&\quad &= \int 
+\frac{\cancel{x}\cdot e^u}{2\cancel{x}} \, du
+= \int \frac{e^u}{2} \, du
+= \frac{e^u}{2}+C
+= \frac{e^{x^2}}{2}+C
+\end{alignedat}
+\]
 </div>
 
 <div class="definition">
@@ -919,18 +633,10 @@ Variabelbytte kan forstås best ved å studere noen eksempler:
   \]
 </div>
 
-<div class="note">
-  <strong>Merk:</strong><br>
-  Det finnes ingen enkel regel for når du skal bruke hvilken
-  integrasjonsmetode, men en "tommelfingerregel" er at det er lurt å først
-  undersøke om det går an å bruke variabelbytte, siden det er enklest. Den eneste faste, enkle regelen i integrasjon er at den deriverte av svaret
-  skal bli integranden
-  (integranden = <em>det som integreres</em>).
-</div>
 
 </section>
 
-<section>
+<section id="del-4">
 <h2>Omdreiningslegemer</h2>
 
 <div class="definition">
@@ -985,9 +691,19 @@ Variabelbytte kan forstås best ved å studere noen eksempler:
     2\pi \int_1^5
     \frac{1}{x}
     \sqrt{\frac{1}{x^4}+1}\,dx
-    \approx 1,72
+    \approx 10\text{,}82
   \]
 </div>
+
+<div class="note">
+  <strong>Merk:</strong><br>
+Integralet for å bestemme overflateareal er ofte veldig vanskelig å løse, men hvis ikke grafen er veldig bratt, kan man bruke at det er litt mindre (men nesten det samme) som
+\[  
+    A = 2\pi \int_a^b f(x)
+    \sqrt{\left(f'(x)\right)^2+1}\,dx \approx  2\pi \int_a^b f(x) \,dx
+\]
+</div>
+
 </section>
 </div>
 </body>
