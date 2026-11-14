@@ -165,6 +165,18 @@
     overflow-x: auto;
 }
 
+/* Tilbake til hovedsiden */
+.side-menu .back-link {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.side-menu .back-link:hover {
+    text-decoration: underline;
+}
+
+
 
     /* ===========================
    Mobiltilpasning
