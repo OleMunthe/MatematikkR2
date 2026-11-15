@@ -39,10 +39,7 @@
   <li>
     Aritmetisk rekke:
     \[
-      a_n = a_{n-1} + d
-    \]
-    \[
-      \sum_{i=1}^{n} a_i = a_1 + a_2 + \cdots + a_n
+      a_n = a_{n-1} + d \;\;\text{ og }\;\;    S_n = \sum_{i=1}^{n} a_i = a_1 + a_2 + \cdots + a_n
       = \frac{n(a_1+a_n)}{2}
     \]
   </li>
@@ -50,18 +47,15 @@
   <li>
     Geometrisk rekke:
     \[
-      a_n = a_{n-1}\cdot k
-    \]
-    \[
-      \sum_{i=1}^{n} a_i = a_1 + a_2 + \cdots + a_n
+      a_n = a_{n-1}\cdot k \;\;\text{ og }\;\;  S_n =  \sum_{i=1}^{n} a_i = a_1 + a_2 + \cdots + a_n
       = a_1\cdot \frac{k^n-1}{k-1}
     \]
   </li>
 
   <li>
-    Uendelig geometrisk rekke: Konvergerer når \(-1 < k < 1\)
+    Uendelig geometrisk rekke: Konvergerer når \(-1 < k < 1\), og summen er da
     \[
-      \sum_{i=1}^{\infty} a_i = a_1 + a_2 + \cdots
+      S = \sum_{i=1}^{\infty} a_i = a_1 + a_2 + \cdots
       = \frac{a_1}{1-k}
     \]
   </li>
@@ -70,20 +64,28 @@
     Kontrapositivt bevis: \(A \Rightarrow B\) betyr at
     <strong>ikke</strong> \(B \Rightarrow\) <strong>ikke</strong> \(A\).
   </li>
-
+<br>
   <li>
-    Induksjonsbevis summen av en rekke:
+    Induksjonsbevis for summen av en rekke:
     <ol>
-      <li>Vis at \(S_1\) stemmer</li>
+      <li>Vis at \(S_1 = a_1\) </li>
       <li>Vis at \(S_n = S_{n-1} + a_n\)</li>
     </ol>
   </li>
-
+<br>
   <li>
-    Induksjonsbevis for formel til \(a_n\)
+    Induksjonsbevis for ekplisitt formel til \(a_n\) (når det er gitt en rekursiv sammenheng):
         <ol>
-      <li>Vis at \(a_1\) stemmer</li>
-      <li>Vise at dersom \(a_{n-1}\) er riktig, vil det føre til at \(a_n\) er riktig</li>
+      <li>Vis at formelen er riktig for \(a_1\)</li>
+      <li>Vis at vi får formelen for \(a_{n+1}\) når formelen for \(a_n\) settes inn i den reukursive sammenhengen</li>
+    </ol>
+  </li>
+  <br>
+    <li>
+    Induksjonsbevis for hva som helst (generell fremgangsmåte):
+        <ol>
+      <li>Vis at påstanden er riktig for det første elementet.</li>
+      <li>Vis at påstanden er riktig for et vilkårlig element, hvis påstanden er riktig for det foregående elementet.</li>
     </ol>
   </li>
 </ul>
